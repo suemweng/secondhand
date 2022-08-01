@@ -27,7 +27,7 @@ function App() {
       </header> */}
 
       <Header />
-      {/* <Main />*/}
+      <Main />
       <Footer />
     </div>
   );
