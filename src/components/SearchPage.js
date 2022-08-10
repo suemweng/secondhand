@@ -1,35 +1,95 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Layout, Menu, message, Row, Tooltip, List, Card } from 'antd';
-import SubMenu from 'antd/lib/menu/SubMenu';
-import Title from "antd/lib/skeleton/Title";
 
-const { Header, Content, Sider } = Layout;
+import item1 from '../assets/images/item1.webp';
+import item2 from '../assets/images/item2.jpeg';
+import item3 from '../assets/images/item3.jpeg';
+import { getAllItems, searchItemsByGenreId } from "../utils";
+
+
+const { Content, Sider } = Layout;
 const { Meta } = Card;
 const menuItem = [  
   { label: 'Clothes', key: 'Clothes' }, // remember to pass the key prop
   { label: 'Bags', key: 'Bags' }, 
   { label: 'Shoes', key: 'Shoes' }, 
-  { label: 'Books', key: 'Books' }, 
-  { label: 'Misc', key: 'Misc' }, ];
+  { label: 'Books', key: 'Books'}, 
+  { label: 'Misc', key: 'Misc' } ];
 
-  function SearchPage () {
+  function SearchPage ({list, onSuccess}) {
 
-  const processUrl = (url) => url
-    .replace('%{height}', '480')
-    .replace('%{width}', '480')
-    .replace('{height}', '480')
-    .replace('{width}', '480');
+    const [loading, setLoading] = useState(false);
+    // const [data, setData] = useState([]);
 
-  const data = [
-    {
-      title:'item 1',
-      thumbnail_url:'https://static-cdn.jtvnw.net/ttv-boxart/509658-{width}x{height}.jpg'
-    },
-    {
-      title:'item 2',
-      thumbnail_url:'https://static-cdn.jtvnw.net/ttv-boxart/32982_IGDB-{width}x{height}.jpg'
+    const dataAll = [
+      {
+        itemId: 1,
+        genreId: 'Shoes',
+        title:'item 1',
+        image: item1
+      },
+      {
+        itemId: 2,
+        genreId: 'Bags',
+        title:'item 2',
+        image: item2
+      },
+      {
+        itemId: 3,
+        genreId: 'Clothes',
+        title:'item 3',
+        image: item3
+      }
+    ]
+
+    useEffect(() =>{
+      setLoading(true);
+
+      try {
+        //const resp = await getAllItems();
+        // onSuccess(resp);
+        onSuccess(dataAll);
+
+      } catch (error) {
+        message.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+
+    },[]);
+
+    const onItemSelect = async (itemId) => {
+      setLoading(true);
+  
+      try {
+        //const resp = await searchItemsByItemId(genreId);
+        // setData(resp);
+        message.info(`Item selected: item ${itemId}`);
+      } catch (error) {
+        message.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+  
     }
-  ]
+
+  const onGenreSelect = async ({key}) => {
+    setLoading(true);
+
+    try {
+      //const resp = await searchItemsByGenreId(key);
+      // setData(resp);
+      const resp = dataAll.filter((item) => item.genreId === key);
+      onSuccess(resp);
+      message.info(`Category selected: ${key}`);
+    } catch (error) {
+      message.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+
+  }
+
   const renderCardTitle = (item) => {
     const title = `${item.title}`;
 
@@ -44,7 +104,7 @@ const menuItem = [
     )
   }
 
-  const renderCardGrid = (data) => {
+  const renderCardGrid = (lsit) => {
     return (
         <List
             grid={{
@@ -54,7 +114,7 @@ const menuItem = [
                 lg: 4,
                 xl: 6,
             }}
-            dataSource={data}
+            dataSource={list}
             renderItem={item => (
                 <List.Item style={{ marginRight: '20px' }}>
                     {/* <Card
@@ -67,17 +127,25 @@ const menuItem = [
                             />
                         </a>
                     </Card> */}
+                    {/* <div  onClick={onItemSelect(item.itemId)}> */}
+                    <div onClick={() => onItemSelect(item.itemId)}>
                       <Card
                           hoverable
-                          style={{width: 240,}}
-                          cover={<img alt="example" src={processUrl(item.thumbnail_url)} />}
+                          style={{width: 300}}         
+                          cover={
+                            <div style={{overflow:"hidden", height: 360}}>
+                                <img alt="example" style={{ height: "100%" }} src={item.image} />
+                            </div>
+                          } 
                         >
                           <Meta title={item.title} description="price" />
                         </Card>
+                      </div>
                 </List.Item>
             )}
         />
     )
+
   }
 
   return (
@@ -99,7 +167,7 @@ const menuItem = [
            </div>
             <Menu
             mode="inline"
-            onSelect={() => { }}
+            onSelect={onGenreSelect}
             style={{ marginTop: '10px' }}
             items={menuItem}
             //items={mapTopGamesToProps(topGames)}
@@ -118,8 +186,7 @@ const menuItem = [
             overflow: 'auto'
           }}
         >
-          {/* {renderCardGrid(data)} */}
-          {renderCardGrid(data)} 
+          {renderCardGrid(list)} 
         </Content>
       </Layout>
     </Layout>

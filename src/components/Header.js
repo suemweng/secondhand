@@ -18,6 +18,26 @@ function Header () {
         setLoggedIn(false);
     }
 
+    const onSearch = async (value) => {
+
+        // searchItemsByName(value)
+        //     .then((data) => {
+        //         onSuccess(data);
+        //     })
+        //     .catch((err) => {
+        //         message.error(err.message);
+        //     })
+
+        try {
+            //const resp = await searchItemsByName(value);
+            // cb(resp);
+            message.info(`Search Key: ${value}`);
+          } catch (error) {
+            message.error(error.message);
+          }
+    }
+
+
     return (
         <header className="App-header">
             
@@ -28,7 +48,7 @@ function Header () {
             {/* <div style={{width: '70%'}}></div> */}
             <Search
                 placeholder="input search text"
-                onSearch={null}
+                onSearch={onSearch}
                 style={{width: 800, margin: 200}}
             />
 

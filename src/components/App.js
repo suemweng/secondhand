@@ -1,10 +1,17 @@
-import React from 'react';
+import React , { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 
 
 function App() {
+
+  const [list, setList] = useState([]);
+
+  const searchOnSuccess = (data) => {
+    setList(data);
+  }
+
   return (
     <div className="App">
 
@@ -27,7 +34,7 @@ function App() {
       </header> */}
 
       <Header />
-      <Main />
+      <Main list={list} searchOnSuccess={searchOnSuccess}/>
       <Footer />
     </div>
   );
