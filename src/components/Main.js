@@ -5,11 +5,7 @@ import ItemPage from "./ItemPage";
 import AcctInfo from "./AcctInfo";
 
 
-function Main ({list, searchOnSuccess}) {
-
-    const [acctInfo, setAcctInfo] = useState(false);
-    const [itemId, setItemId] = useState(null);
-
+function Main ({list, acctInfo, itemId, searchOnSuccess}) {
 
     const renderContent = () => {
         if (acctInfo) {
