@@ -3,10 +3,11 @@ import logo from '../assets/images/logo.svg';
 import { Button, Form, Input, message, Modal } from 'antd';
 import Login from './Login';
 import Register from './Register';
+import { getAllItems } from "../utils";
 
 const { Search } = Input;
 
-function Header () {
+function Header ({searchOnSuccess}) {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -16,6 +17,18 @@ function Header () {
 
     const signoutOnClick = () => {
         setLoggedIn(false);
+    }
+
+    const getHomePage = () => {
+        try {
+            //const resp = await getAllItems();
+            const resp = getAllItems();
+            searchOnSuccess(resp);
+            // searchOnSuccess(dataAll);
+    
+          } catch (error) {
+            message.error(error.message);
+          } 
     }
 
     const onSearch = async (value) => {
@@ -30,7 +43,7 @@ function Header () {
 
         try {
             //const resp = await searchItemsByName(value);
-            // cb(resp);
+            // searchOnSuccess(resp);
             message.info(`Search Key: ${value}`);
           } catch (error) {
             message.error(error.message);
@@ -42,14 +55,14 @@ function Header () {
         <header className="App-header">
             
             <img src={logo} className="App-logo" alt="logo" />
-            <p className="title">
+            <p className="title" onClick={getHomePage} style={{cursor: 'pointer'}}>
                 Second Hand
             </p>
             {/* <div style={{width: '70%'}}></div> */}
             <Search
                 placeholder="input search text"
                 onSearch={onSearch}
-                style={{width: 800, margin: 200}}
+                style={{width: 700, margin: 100}}
             />
 
                 {
