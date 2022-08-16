@@ -29,7 +29,6 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
             //const resp = await getAllItems();
             const resp = getAllItems();
             searchOnSuccess(resp);
-            // searchOnSuccess(dataAll);
     
           } catch (error) {
             message.error(error.message);
@@ -37,14 +36,6 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
     }
 
     const onSearch = async (value) => {
-
-        // searchItemsByName(value)
-        //     .then((data) => {
-        //         onSuccess(data);
-        //     })
-        //     .catch((err) => {
-        //         message.error(err.message);
-        //     })
 
         try {
             //const resp = await searchItemsByName(value);

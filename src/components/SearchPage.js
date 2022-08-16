@@ -9,7 +9,8 @@ const menuItem = [
   { label: 'Clothes', key: 'Clothes' }, // remember to pass the key prop
   { label: 'Bags', key: 'Bags' }, 
   { label: 'Shoes', key: 'Shoes' }, 
-  { label: 'Books', key: 'Books'}, 
+  { label: 'Furnitures', key: 'Furnitures'}, 
+  { label: 'Electronics', key: 'Electronics'}, 
   { label: 'Misc', key: 'Misc' } ];
 
   function SearchPage ({list, onSuccess, itemSelected}) {
@@ -24,7 +25,7 @@ const menuItem = [
         //const resp = await getAllItems();
         const resp = getAllItems();
         onSuccess(resp);
-        //onSuccess(dataAll);
+        
 
       } catch (error) {
         message.error(error.message);
@@ -105,7 +106,7 @@ const menuItem = [
                         </a>
                     </Card> */}
                     {/* <div  onClick={onItemSelect(item.itemId)}> */}
-                    <div onClick={() => onItemSelect(item.itemId)}>
+                    <div onClick={() => onItemSelect(item.product_id)}>
                       <Card
                           hoverable
                           style={{width: 300}}         
@@ -115,7 +116,7 @@ const menuItem = [
                             </div>
                           } 
                         >
-                          <Meta title={item.title} description="price" />
+                          <Meta title={`${item.product_name} - $${item.price}`} description={item.description} />
                         </Card>
                       </div>
                 </List.Item>

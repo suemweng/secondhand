@@ -1,12 +1,146 @@
-import React from "react";
+import React, { Component } from "react";
+import { Descriptions, Carousel, Image, Card} from 'antd';
+import {
+    LeftCircleFilled,
+    RightCircleFilled,
+    InfoCircleOutlined,
+} from "@ant-design/icons";
+import { CarouselData } from "./CarouselData";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import Swipe from "react-easy-swipe";
 
 
-function ItemPage ({itemId}) {
+class ItemPage extends React.Component{
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentSlide: 0,
+            paused: false,
+        };
+    }
 
-    return (
-        <div style={{fontSize:50, width:'100%', textAlign:'center'}}> {`Item Page - Item ${itemId}`}</div>
-    )
+    componentDidMount() {
+        setInterval(() => {
+          if (this.state.paused === false) {
+            let newSlide =
+              this.state.currentSlide === CarouselData.length - 1
+                ? 0
+                : this.state.currentSlide + 1;
+            this.setState({ currentSlide: newSlide });
+          }
+        }, 3000);
+    }
+
+    nextSlide = () => {
+        let newSlide =
+          this.state.currentSlide === CarouselData.length - 1
+            ? 0
+            : this.state.currentSlide + 1;
+        this.setState({ currentSlide: newSlide });
+    };
+
+    prevSlide = () => {
+        let newSlide =
+          this.state.currentSlide === 0
+            ? CarouselData.length - 1
+            : this.state.currentSlide - 1;
+        this.setState({ currentSlide: newSlide });
+    };
+    
+    setCurrentSlide = (index) => {
+        this.setState({ currentSlide: index });
+    };
+
+    render() {
+        const itemId = this.props.itemId;
+        return ( 
+            <>
+            
+            <div style={{width:'50%'}}>
+                {/* <div className="max-w-lg h-72 flex overflow-hidden relative">
+                    <AiOutlineLeft
+                        onClick={this.prevSlide}
+                        className="absolute left-0 text-3xl inset-y-1/2 text-white cursor-pointer"
+                    />
+
+                    <Swipe onSwipeLeft={this.nextSlide} onSwipeRight={this.prevSlide}>
+                        {CarouselData.map((slide, index) => {
+                            return (
+                                <img
+                                    src={slide.image}
+                                    alt="This is a carousel slide"
+                                    key={index}
+                                    className={
+                                        index === this.state.currentSlide
+                                            ? "block w-full h-auto object-cover"
+                                            : "hidden"
+                                    }
+                                    onMouseEnter={() => {
+                                        this.setState({ paused: true });
+                                    }}
+                                    onMouseLeave={() => {
+                                        this.setState({ paused: false });
+                                    }}
+                                />
+                            );
+                        })}
+                    </Swipe>
+
+                    <div className="absolute w-full flex justify-center bottom-0">
+                        {CarouselData.map((element, index) => {
+                            return (
+                                <div
+                                    className={
+                                    index === this.state.currentSlide
+                                        ? "h-2 w-2 bg-blue-700 rounded-full mx-2 mb-2 cursor-pointer"
+                                        : "h-2 w-2 bg-white rounded-full mx-2 mb-2 cursor-pointer"
+                                    }
+                                    key={index}
+                                    onClick={() => {
+                                        this.setCurrentSlide(index);
+                                    }}
+                                ></div>
+                            );
+                        })}
+                    </div>
+
+                    <AiOutlineRight
+                        onClick={this.nextSlide}
+                        className="absolute right-0 text-3xl inset-y-1/2 text-white cursor-pointer"
+                    />
+                </div> */}
+                <Card
+                    style={{width:'80%', justifyItems:'center'}}
+                >
+                {
+                    <Carousel autoplay
+                    dots={true}
+                    arrows={true}
+                    speed={500}
+                    prevArrow={<LeftCircleFilled />}
+                    nextArrow={<RightCircleFilled />}
+                    >
+                        {CarouselData.map((slide, index) => (
+                            <div key={index}>
+                                <Image src={slide.image} width="100%" />
+                            </div>
+                        ))}
+                </Carousel>}
+                </Card>
+            </div>
+            <div className="mt-8" style={{width:'50%', justifyItems:'center'}}>
+                <Descriptions title="Item Information" bordered>
+                <Descriptions.Item label="Item Name"> {`Item ${itemId}`}</Descriptions.Item>
+                <Descriptions.Item label="Item Price">$10</Descriptions.Item>
+                <Descriptions.Item label="Item Category">Book</Descriptions.Item>
+                <Descriptions.Item label="Description">A Book about Growth</Descriptions.Item>
+                </Descriptions>
+            </div>
+            </>
+        );
+    }
+      
 }
 
 export default ItemPage;

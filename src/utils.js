@@ -1,53 +1,32 @@
-import item1 from './assets/images/item1.webp';
-import item2 from './assets/images/item2.jpeg';
-import item3 from './assets/images/item3.jpeg';
 
- // temperay fake data
- const dataAll = [
-    {
-      itemId: 1,
-      genreId: 'Shoes',
-      title:'item 1',
-      image: item1
-    },
-    {
-      itemId: 2,
-      genreId: 'Bags',
-      title:'item 2',
-      image: item2
-    },
-    {
-      itemId: 3,
-      genreId: 'Clothes',
-      title:'item 3',
-      image: item3
-    }
-  ]
+import { dataAll } from "./testData";
 
 
-const domain = "";
-const allItemsUrl = `${domain}/product`;
-const searchItemsByGenreIdUrl = `${domain}/product/genre_id=`;
-
+const domain = "https://laioffer-database.herokuapp.com";
+const allItemsUrl = `${domain}/filters?zipcode&city&min_price&max_price`;
+const searchItemsByGenreIdUrl = `${domain}/products/genres?genre_type=`;
+const searchItemsByNameUrl = `${domain}/products/search/`;
+const searchMyItemsUrl = `${domain}/products`;
 
 export const login = (Credential) => { };
 
 export const register = (Credential) => { };
 
 export const getAllItems = () => {
-    return dataAll;
-    // return fetch(allItemsUrl).then((response) => {
+   return dataAll;
+
+    // return fetch(allItemsUrl)
+    //   .then((response) => {
     //     if (response.status !== 200) {
     //         throw Error('Fail to get all items');
     //     }
-
     //     return response.json();
     // })
 }
 
 export const searchItemsByGenreId = (genreIdSelected) => {
 
-    return dataAll.filter((item) => item.genreId === genreIdSelected);
+    return dataAll.filter((item) => item.genre_type.genreType === genreIdSelected);
 
     // return fetch(`${searchItemsByGenreIdUrl}${genreId}`).then((response) => {
     //     if (response.status !== 200) {
@@ -55,4 +34,16 @@ export const searchItemsByGenreId = (genreIdSelected) => {
     //     }
     //     return response.json();
     // })
+}
+
+export const searchItemsByName = (name) => {
+
+  // return dataAll.filter((item) => item.genreId === genreIdSelected);
+
+  // return fetch(`${searchItemsByNameUrl}${genreId}`).then((response) => {
+  //     if (response.status !== 200) {
+  //         throw Error('Fail to find the genre');
+  //     }
+  //     return response.json();
+  // })
 }
