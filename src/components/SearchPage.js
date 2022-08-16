@@ -12,7 +12,7 @@ const menuItem = [
   { label: 'Books', key: 'Books'}, 
   { label: 'Misc', key: 'Misc' } ];
 
-  function SearchPage ({list, onSuccess}) {
+  function SearchPage ({list, onSuccess, itemSelected}) {
 
     const [loading, setLoading] = useState(false);
 
@@ -34,13 +34,14 @@ const menuItem = [
 
     },[]);
 
-    const onItemSelect = async (itemId) => {
+    const onItemSelect =  (itemId) => {
       setLoading(true);
   
       try {
         //const resp = await searchItemsByItemId(genreId);
         // setData(resp);
-        message.info(`Item selected: item ${itemId}`);
+        itemSelected(itemId);
+        //message.info(`Item selected: item ${itemId}`);
       } catch (error) {
         message.error(error.message);
       } finally {

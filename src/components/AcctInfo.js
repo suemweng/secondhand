@@ -5,7 +5,7 @@ function AcctInfo () {
 
 
     return (
-        <> Account Info</>
+        <div style={{fontSize:50, width:'100%', textAlign:'center'}}> Account Info </div>
     )
 }
 

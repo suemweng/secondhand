@@ -17,6 +17,14 @@ function App() {
     setItemId(null);
   }
 
+  const acctInfoSelected = () => {
+    setAcctInfo(true);
+  }
+
+  const itemSelected = (itemId) => {
+    setItemId(itemId);
+    //alert('itemId received');
+  }
 
   return (
     <div className="App">
@@ -39,12 +47,13 @@ function App() {
         </a>
       </header> */}
 
-      <Header searchOnSuccess={searchOnSuccess}/>
+      <Header searchOnSuccess={searchOnSuccess} acctInfoSelected={acctInfoSelected}/>
       <Main 
         list={list} 
         acctInfo={acctInfo}
         itemId={itemId}
-        searchOnSuccess={searchOnSuccess}/>
+        searchOnSuccess={searchOnSuccess}
+        itemSelected={itemSelected}/>
       <Footer />
     </div>
   );

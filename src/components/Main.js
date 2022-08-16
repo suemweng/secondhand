@@ -5,7 +5,7 @@ import ItemPage from "./ItemPage";
 import AcctInfo from "./AcctInfo";
 
 
-function Main ({list, acctInfo, itemId, searchOnSuccess}) {
+function Main ({list, acctInfo, itemId, searchOnSuccess, itemSelected}) {
 
     const renderContent = () => {
         if (acctInfo) {
@@ -13,10 +13,10 @@ function Main ({list, acctInfo, itemId, searchOnSuccess}) {
         }
 
         if (itemId != null) {
-            return <ItemPage />;
+            return <ItemPage itemId={itemId}/>;
         }
 
-        return <SearchPage list={list} onSuccess={searchOnSuccess}/>;
+        return <SearchPage list={list} onSuccess={searchOnSuccess} itemSelected={itemSelected}/>;
     }
 
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../assets/images/logo.svg';
+import logo2 from '../assets/images/logo2.png';
 import { Button, Form, Input, message, Modal } from 'antd';
 import Login from './Login';
 import Register from './Register';
@@ -7,7 +7,7 @@ import { getAllItems } from "../utils";
 
 const { Search } = Input;
 
-function Header ({searchOnSuccess}) {
+function Header ({searchOnSuccess, acctInfoSelected}) {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -17,6 +17,11 @@ function Header ({searchOnSuccess}) {
 
     const signoutOnClick = () => {
         setLoggedIn(false);
+        getHomePage();
+    }
+
+    const acctInfoOnClick = () => {
+        acctInfoSelected();
     }
 
     const getHomePage = () => {
@@ -54,7 +59,7 @@ function Header ({searchOnSuccess}) {
     return (
         <header className="App-header">
             
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo2} className="App-logo" alt="logo" />
             <p className="title" onClick={getHomePage} style={{cursor: 'pointer'}}>
                 Second Hand
             </p>
@@ -68,7 +73,7 @@ function Header ({searchOnSuccess}) {
                 {
                 loggedIn ?
                 <div>
-                    <Button shape="round" type="primary" style={{margin: '10px'}} onClick={null}>
+                    <Button shape="round" type="primary" style={{margin: '10px'}} onClick={acctInfoOnClick}>
                         My Account</Button> 
                         <Button shape="round" type="primary" style={{margin: '15px'}} onClick={signoutOnClick}>
                         Logout</Button> 
