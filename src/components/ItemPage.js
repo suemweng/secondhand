@@ -53,6 +53,7 @@ class ItemPage extends React.Component{
                 <Descriptions title="Item Information" bordered>
                 <Descriptions.Item label="Item Name">Book</Descriptions.Item>
                 <Descriptions.Item label="Item Price">$10</Descriptions.Item>
+                <Descriptions.Item lable="Item Category">Book</Descriptions.Item>
                 <Descriptions.Item label="Description">A Book about Growth</Descriptions.Item>
                 </Descriptions>
                 <div className="max-w-lg h-72 flex overflow-hidden relative">
