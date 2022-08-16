@@ -1,10 +1,31 @@
-import React from 'react';
+import React , { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import { message } from 'antd';
 
 
 function App() {
+
+  const [list, setList] = useState([]);
+  const [acctInfo, setAcctInfo] = useState(false);
+  const [itemId, setItemId] = useState(null);
+
+  const searchOnSuccess = (data) => {
+    setList(data);
+    setAcctInfo(false);
+    setItemId(null);
+  }
+
+  const acctInfoSelected = () => {
+    setAcctInfo(true);
+  }
+
+  const itemSelected = (itemId) => {
+    setItemId(itemId);
+    //alert('itemId received');
+  }
+
   return (
     <div className="App">
 
@@ -26,8 +47,13 @@ function App() {
         </a>
       </header> */}
 
-      <Header />
-      <Main />
+      <Header searchOnSuccess={searchOnSuccess} acctInfoSelected={acctInfoSelected}/>
+      <Main 
+        list={list} 
+        acctInfo={acctInfo}
+        itemId={itemId}
+        searchOnSuccess={searchOnSuccess}
+        itemSelected={itemSelected}/>
       <Footer />
     </div>
   );

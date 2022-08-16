@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Descriptions} from 'antd';
+import { Descriptions, Carousel, Image, Card} from 'antd';
+import {
+    LeftCircleFilled,
+    RightCircleFilled,
+    InfoCircleOutlined,
+} from "@ant-design/icons";
 import { CarouselData } from "./CarouselData";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
@@ -48,15 +53,12 @@ class ItemPage extends React.Component{
     };
 
     render() {
+        const itemId = this.props.itemId;
         return ( 
-            <div className="mt-8">
-                <Descriptions title="Item Information" bordered>
-                <Descriptions.Item label="Item Name">Book</Descriptions.Item>
-                <Descriptions.Item label="Item Price">$10</Descriptions.Item>
-                <Descriptions.Item lable="Item Category">Book</Descriptions.Item>
-                <Descriptions.Item label="Description">A Book about Growth</Descriptions.Item>
-                </Descriptions>
-                <div className="max-w-lg h-72 flex overflow-hidden relative">
+            <>
+            
+            <div style={{width:'50%'}}>
+                {/* <div className="max-w-lg h-72 flex overflow-hidden relative">
                     <AiOutlineLeft
                         onClick={this.prevSlide}
                         className="absolute left-0 text-3xl inset-y-1/2 text-white cursor-pointer"
@@ -107,8 +109,35 @@ class ItemPage extends React.Component{
                         onClick={this.nextSlide}
                         className="absolute right-0 text-3xl inset-y-1/2 text-white cursor-pointer"
                     />
-                </div>
+                </div> */}
+                <Card
+                    style={{width:'80%', justifyItems:'center'}}
+                >
+                {
+                    <Carousel autoplay
+                    dots={true}
+                    arrows={true}
+                    speed={500}
+                    prevArrow={<LeftCircleFilled />}
+                    nextArrow={<RightCircleFilled />}
+                    >
+                        {CarouselData.map((slide, index) => (
+                            <div key={index}>
+                                <Image src={slide.image} width="100%" />
+                            </div>
+                        ))}
+                </Carousel>}
+                </Card>
             </div>
+            <div className="mt-8" style={{width:'50%', justifyItems:'center'}}>
+                <Descriptions title="Item Information" bordered>
+                <Descriptions.Item label="Item Name"> {`Item ${itemId}`}</Descriptions.Item>
+                <Descriptions.Item label="Item Price">$10</Descriptions.Item>
+                <Descriptions.Item label="Item Category">Book</Descriptions.Item>
+                <Descriptions.Item label="Description">A Book about Growth</Descriptions.Item>
+                </Descriptions>
+            </div>
+            </>
         );
     }
       

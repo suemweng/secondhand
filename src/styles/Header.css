@@ -1,6 +1,6 @@
 .App-logo {
     height: 50px;
-    margin: 10px;
+    margin: 10px 30px;
 }
 
 
@@ -18,4 +18,5 @@
     font-size: 30px;
     font-weight: bold;
     margin: 0px;
+    width: 200;
 }
