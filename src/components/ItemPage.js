@@ -10,6 +10,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
 
 
+
 class ItemPage extends React.Component{
 
     constructor(props) {
@@ -58,6 +59,7 @@ class ItemPage extends React.Component{
         const genre = this.props.itemInfo.genre_type.genreType;
         const description = this.props.itemInfo.description;
         const {email, phone, firstName, lastName, reviews} = this.props.itemInfo.user;
+
 
         return ( 
             <>
@@ -150,7 +152,7 @@ class ItemPage extends React.Component{
                 <Descriptions.Item label="Seller Name"> {`${firstName} ${lastName}`}</Descriptions.Item>
                 <Descriptions.Item label="Email">{email}</Descriptions.Item>
                 <Descriptions.Item label="Phone">{phone}</Descriptions.Item>
-                <Descriptions.Item label="Reviews">{reviews.review_content}</Descriptions.Item>
+                <Descriptions.Item label="Reviews">{reviews.length == 0 ? "(no review)" : reviews[0].review_content}</Descriptions.Item>
                 </Descriptions>
             </div>
             </>

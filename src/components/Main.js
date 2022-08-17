@@ -5,20 +5,21 @@ import ItemPage from "./ItemPage";
 import AcctInfo from "./AcctInfo";
 
 
-function Main ({list, acctInfo, itemId, searchOnSuccess, itemSelected}) {
+function Main ({list, acctInfo, itemInfo, searchOnSuccess, itemSelected}) {
 
     const renderContent = () => {
         if (acctInfo) {
             return <AcctInfo />;
         }
 
-        if (itemId != null) {
-            return <ItemPage itemId={itemId}/>;
+        if (itemInfo != null) {
+            return <ItemPage itemInfo={itemInfo}/>;
         }
 
         return <SearchPage list={list} onSuccess={searchOnSuccess} itemSelected={itemSelected}/>;
     }
 
+    console.log(`main: ${list}`);
     return (
         <Row className='main'>
             {renderContent()}
