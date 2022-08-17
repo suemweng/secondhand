@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, Col, Layout, Menu, message, Row, Tooltip, List, Card } from 'antd';
 import { getAllItems, searchItemsByGenreId } from "../utils";
 
+import Shoes from '../assets/images/Shoes.webp';
+import Bags from '../assets/images/Bags.jpeg';
+import Clothes from '../assets/images/Clothes.jpeg';
+
 
 const { Content, Sider } = Layout;
 const { Meta } = Card;
@@ -18,12 +22,13 @@ const menuItem = [
     const [loading, setLoading] = useState(false);
 
     // DidMount to getAllItems
-    useEffect(() =>{
+    useEffect( () =>{
+      async function fetchData(){
       setLoading(true);
 
       try {
-        //const resp = await getAllItems();
-        const resp = getAllItems();
+        const resp = await getAllItems();
+        //const resp = getAllItems();
         onSuccess(resp);
         
 
@@ -32,7 +37,8 @@ const menuItem = [
       } finally {
         setLoading(false);
       }
-
+    }
+    fetchData();
     },[]);
 
     const onItemSelect =  (itemId) => {
@@ -42,7 +48,7 @@ const menuItem = [
         //const resp = await searchItemsByItemId(genreId);
         // setData(resp);
         itemSelected(itemId);
-        //message.info(`Item selected: item ${itemId}`);
+        message.info(`Item selected: item ${itemId}`);
       } catch (error) {
         message.error(error.message);
       } finally {
@@ -55,8 +61,8 @@ const menuItem = [
     setLoading(true);
 
     try {
-      //const resp = await searchItemsByGenreId(key);
-      const resp = searchItemsByGenreId(key);
+      const resp = await searchItemsByGenreId(key);
+      // const resp = searchItemsByGenreId(key);
       //const resp = dataAll.filter((item) => item.genreId === key);
       onSuccess(resp);
       message.info(`Category selected: ${key}`);
@@ -68,16 +74,52 @@ const menuItem = [
 
   }
 
-  const renderCardTitle = (item) => {
-    const title = `${item.title}`;
+  // const renderCardTitle = (item) => {
+  //   const title = `${item.title}`;
 
+  //   return (
+  //       <>
+  //           <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', width: 450 }}>
+  //               <Tooltip title={title}>
+  //                   <span>{title}</span>
+  //               </Tooltip>
+  //           </div>
+  //       </>
+  //   )
+  // }
+
+//   const renderContent = () => {
+//     if (acctInfo) {
+//         return <AcctInfo />;
+//     }
+
+//     if (itemInfo != null) {
+//         return <ItemPage itemInfo={itemInfo}/>;
+//     }
+
+//     return <SearchPage list={list} onSuccess={searchOnSuccess} itemSelected={itemSelected}/>;
+// }
+
+  const renderCardImage = (item) => {
+    if (item.image != null) {
+      return <img alt="Product Picture" style={{ height: "100%" }} src={item.image} />;
+    }
+
+    if (item.genre_type.genreType === "Clothes") {
+      return <img alt="Genre Picture" style={{ height: "100%" }} src={Clothes}/>;
+    }
+
+    if (item.genre_type.genreType === "Shoes") {
+      return <img alt="Genre Picture" style={{ height: "100%" }} src={Shoes}/>;
+    }
+
+    if (item.genre_type.genreType === "Bags") {
+      return <img alt="Genre Picture" style={{ height: "100%" }} src={Bags}/>;
+    }
+    
     return (
         <>
-            <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', width: 450 }}>
-                <Tooltip title={title}>
-                    <span>{title}</span>
-                </Tooltip>
-            </div>
+            <img alt="Genre Picture" style={{ height: "100%" }} src={item.image}/>
         </>
     )
   }
@@ -112,7 +154,8 @@ const menuItem = [
                           style={{width: 300}}         
                           cover={
                             <div style={{overflow:"hidden", height: 360}}>
-                                <img alt="example" style={{ height: "100%" }} src={item.image} />
+                                {/* <img alt="Product Picture" style={{ height: "100%" }} src={item.image} /> */}
+                                {renderCardImage(item)}
                             </div>
                           } 
                         >
