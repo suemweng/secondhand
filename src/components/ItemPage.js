@@ -53,11 +53,15 @@ class ItemPage extends React.Component{
     };
 
     render() {
-        const itemId = this.props.itemId;
+        const name = this.props.itemInfo.product_name;
+        const price = this.props.itemInfo.price;
+        const genre = this.props.itemInfo.genre_type.genreType;
+        const description = this.props.itemInfo.description;
+        const {email, phone, firstName, lastName, reviews} = this.props.itemInfo.user;
+
         return ( 
             <>
-            
-            <div style={{width:'50%'}}>
+            <div style={{width:'50%', display:'flex', justifyContent:'center'}}>
                 {/* <div className="max-w-lg h-72 flex overflow-hidden relative">
                     <AiOutlineLeft
                         onClick={this.prevSlide}
@@ -129,12 +133,24 @@ class ItemPage extends React.Component{
                 </Carousel>}
                 </Card>
             </div>
-            <div className="mt-8" style={{width:'50%', justifyItems:'center'}}>
+            <div className="mt-8" style={{
+                    width:'50%', 
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent:'space-around'
+                }}>
                 <Descriptions title="Item Information" bordered>
-                <Descriptions.Item label="Item Name"> {`Item ${itemId}`}</Descriptions.Item>
-                <Descriptions.Item label="Item Price">$10</Descriptions.Item>
-                <Descriptions.Item label="Item Category">Book</Descriptions.Item>
-                <Descriptions.Item label="Description">A Book about Growth</Descriptions.Item>
+                <Descriptions.Item label="Item Name"> {`${name}`}</Descriptions.Item>
+                <Descriptions.Item label="Item Price">{`$ ${price}`}</Descriptions.Item>
+                <Descriptions.Item label="Item Category">{genre}</Descriptions.Item>
+                <Descriptions.Item label="Description">{description}</Descriptions.Item>
+                </Descriptions>
+
+                <Descriptions title="Seller Information" bordered>
+                <Descriptions.Item label="Seller Name"> {`${firstName} ${lastName}`}</Descriptions.Item>
+                <Descriptions.Item label="Email">{email}</Descriptions.Item>
+                <Descriptions.Item label="Phone">{phone}</Descriptions.Item>
+                <Descriptions.Item label="Reviews">{reviews.review_content}</Descriptions.Item>
                 </Descriptions>
             </div>
             </>
