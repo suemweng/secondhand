@@ -19,7 +19,7 @@ function Main ({list, acctInfo, itemInfo, searchOnSuccess, itemSelected}) {
         return <SearchPage list={list} onSuccess={searchOnSuccess} itemSelected={itemSelected}/>;
     }
 
-    console.log(`main: ${list}`);
+    console.log(`main list: ${list}`);
     return (
         <Row className='main'>
             {renderContent()}

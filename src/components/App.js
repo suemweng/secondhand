@@ -1,8 +1,9 @@
-import React , { useState } from 'react';
+import React , { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import { message } from 'antd';
+import { getAllItems } from "../utils";
 
 
 function App() {
@@ -12,12 +13,14 @@ function App() {
   const [acctInfo, setAcctInfo] = useState(false);
   const [itemInfo, setItemInfo] = useState(null);
 
+  
+
   const searchOnSuccess = (data) => {
     setList(data);
     setAcctInfo(false);
     setItemInfo(null);
-    console.log(`App: ${list}`);
-    console.log(data);
+
+    console.log(`App data: ${data}`);
   }
 
   const acctInfoSelected = () => {
@@ -36,6 +39,28 @@ function App() {
 
   }
 
+  // DidMount to getAllItems
+  useEffect( () =>{
+    async function fetchData(){
+   // setLoading(true);
+
+    try {
+      const resp = await getAllItems();
+      //const resp = getAllItems();
+      searchOnSuccess(resp);
+      
+
+    } catch (error) {
+      message.error(error.message);
+    } finally {
+     // setLoading(false);
+    }
+  }
+  fetchData();
+  },[]);
+
+
+  console.log(`App list: ${list}`);
   return (
     <div className="App">
 

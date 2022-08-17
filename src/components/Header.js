@@ -52,6 +52,7 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
             const resp = await searchItemsByName(value);
             searchOnSuccess(resp);
             message.info(`Search Key: ${value}`);
+            console.log(`Search Key: ${resp}`);
           } catch (error) {
             message.error(error.message);
           }

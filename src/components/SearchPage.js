@@ -21,25 +21,25 @@ const menuItem = [
 
     const [loading, setLoading] = useState(false);
 
-    // DidMount to getAllItems
-    useEffect( () =>{
-      async function fetchData(){
-      setLoading(true);
+    // // DidMount to getAllItems
+    // useEffect( () =>{
+    //   async function fetchData(){
+    //   setLoading(true);
 
-      try {
-        const resp = await getAllItems();
-        //const resp = getAllItems();
-        onSuccess(resp);
+    //   try {
+    //     const resp = await getAllItems();
+    //     //const resp = getAllItems();
+    //     onSuccess(resp);
         
 
-      } catch (error) {
-        message.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-    },[]);
+    //   } catch (error) {
+    //     message.error(error.message);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // }
+    // fetchData();
+    // },[]);
 
     const onItemSelect =  (itemId) => {
       setLoading(true);
