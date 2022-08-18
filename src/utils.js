@@ -9,6 +9,7 @@ const searchItemsByNameUrl = `${domain}/products/search/`;
 const searchMyItemsUrl = `${domain}/products`;
 const loginUrl = `${domain}/user/authenticate`;
 const registerUrl = `${domain}/user/register`;
+const uploadItemUrl = `${domain}/products`;
 
 
 
@@ -109,3 +110,21 @@ export const getMyItems = () => {
        return response.json();
    })
 }
+
+export const uploadItem = (data) => {
+  const authToken = localStorage.getItem("authToken");
+
+
+  return fetch(uploadItemUrl, {
+      method: "POST",
+      headers: {
+          Authorization: `Bearer ${authToken}`,
+      },
+      body: data,
+  }).then((response) => {
+      if (response.status !== 200) {
+          throw Error("Fail to upload item");
+      }
+  });
+};
+

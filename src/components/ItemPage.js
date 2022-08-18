@@ -141,10 +141,10 @@ class ItemPage extends React.Component{
                     flexDirection:'column',
                     justifyContent:'space-around'
                 }}>
-                <Descriptions title="Item Information" bordered>
-                <Descriptions.Item label="Item Name"> {`${name}`}</Descriptions.Item>
-                <Descriptions.Item label="Item Price">{`$ ${price}`}</Descriptions.Item>
-                <Descriptions.Item label="Item Category">{genre}</Descriptions.Item>
+                <Descriptions title="Product Information" bordered>
+                <Descriptions.Item label="Title"> {`${name}`}</Descriptions.Item>
+                <Descriptions.Item label="Price">{`$ ${price}`}</Descriptions.Item>
+                <Descriptions.Item label="Category">{genre}</Descriptions.Item>
                 <Descriptions.Item label="Description">{description}</Descriptions.Item>
                 </Descriptions>
 
