@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo2 from '../assets/images/logo2.png';
 import { Button, Form, Input, message, Modal } from 'antd';
 import Login from './Login';
 import Register from './Register';
-import { getAllItems } from "../utils";
+import { getAllItems, searchItemsByName } from "../utils";
 
 const { Search } = Input;
 
@@ -11,11 +11,21 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const signinOnSuccess = () => {
+    // DidMount to getAllItems
+    useEffect( () => {
+        const authToken = localStorage.getItem("authToken");
+        if (authToken !== null) {
+            setLoggedIn(true);
+        } 
+    }, []);
+
+    const signinOnSuccess = (token) => {
+        localStorage.setItem("authToken", token);
         setLoggedIn(true);
     }
 
     const signoutOnClick = () => {
+        localStorage.removeItem("authToken");
         setLoggedIn(false);
         getHomePage();
     }
@@ -24,10 +34,10 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
         acctInfoSelected();
     }
 
-    const getHomePage = () => {
+    const getHomePage = async() => {
         try {
-            //const resp = await getAllItems();
-            const resp = getAllItems();
+            const resp = await getAllItems();
+            //const resp = getAllItems();
             searchOnSuccess(resp);
     
           } catch (error) {
@@ -39,8 +49,10 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
 
         try {
             //const resp = await searchItemsByName(value);
-            // searchOnSuccess(resp);
+            const resp = await searchItemsByName(value);
+            searchOnSuccess(resp);
             message.info(`Search Key: ${value}`);
+            console.log(`Search Key: ${resp}`);
           } catch (error) {
             message.error(error.message);
           }

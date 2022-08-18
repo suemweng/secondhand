@@ -2,8 +2,9 @@
 @import "./styles/App.css";
 @import "./styles/Header.css";
 @import "./styles/Footer.css";
-@import "./styles/Main.css";
+@import "./styles/ItemPage.css";
 @import "./styles/SearchPage.css";
+@import "./styles/Main.css";
 
 body {
   margin: 0;

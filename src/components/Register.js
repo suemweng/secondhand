@@ -26,7 +26,7 @@ class Register extends React.Component {
         this.setState({
           displayModal: false,
         })
-        message.success(`Successfully signed up`);
+        message.success(`Successfully registered`);
       }).catch((err) => {
         message.error(err.message);
       })
@@ -51,7 +51,7 @@ class Register extends React.Component {
             preserve={false}
           >
             <Form.Item
-              name="user_id"
+              name="username"
               rules={[{ required: true, message: 'Please input your Username!' }]}
             >
               <Input prefix={<UserOutlined />} placeholder="Username" />
@@ -70,7 +70,7 @@ class Register extends React.Component {
               rules={[{ required: true, message: 'Please input your Firstname!' }]}
             >
               <Input
-                placeholder="FirstName"
+                placeholder="First Name"
               />
             </Form.Item>
             <Form.Item
@@ -78,7 +78,7 @@ class Register extends React.Component {
               rules={[{ required: true, message: 'Please input your Lastname!' }]}
             >
               <Input
-                placeholder="LastName"
+                placeholder="Last Name"
               />
             </Form.Item>
             <Form.Item

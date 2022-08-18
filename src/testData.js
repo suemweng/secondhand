@@ -1,6 +1,6 @@
-import item1 from './assets/images/item1.webp';
-import item2 from './assets/images/item2.jpeg';
-import item3 from './assets/images/item3.jpeg';
+import Shoes from './assets/images/Shoes.webp';
+import Bags from './assets/images/Bags.jpeg';
+import Clothes from './assets/images/Clothes.jpeg';
 
 export const dataAll = [{
     user: {
@@ -9,22 +9,22 @@ export const dataAll = [{
       phone:'789-456-789',
       firstName:'Tian',
       lastName:'Li',
-      reviews:{
+      reviews:[{
         id:21,
         review_content:'review contents 1',
         created_at:'2022-08-15T22:25:34'
-      },
+      }]
     },
     product_id: 1,
-    product_name:'shoes-2',
-    description:'amazing shoes-2',
+    product_name:'shoes-4',
+    description:'amazing shoes-1',
     price:170,
     created_at:'2022-2022-08-16T01:33:26-',
     updated_at:null,
     genre_type: {
       genreType:'Shoes'
     },
-    image: item1
+    image: Shoes
   },
   { 
     user: {
@@ -33,11 +33,11 @@ export const dataAll = [{
       phone:'789-456-789',
       firstName:'Tian',
       lastName:'Li',
-      reviews:{
+      reviews:[{
         id:22,
         review_content:'review contents 2',
         created_at:'2022-08-15T22:25:34'
-      },
+      }]
     },
     product_id: 2,
     product_name:'bags-2',
@@ -48,7 +48,7 @@ export const dataAll = [{
     genre_type: {
       genreType:'Bags'
     },
-    image: item2
+    image: Bags
   },
   {
     user: {
@@ -57,11 +57,11 @@ export const dataAll = [{
       phone:'789-456-789',
       firstName:'Tian',
       lastName:'Li',
-      reviews:{
+      reviews:[{
         id:23,
         review_content:'review contents 3',
         created_at:'2022-08-15T22:25:34'
-      },
+      }]
     },
     product_id: 3,
     product_name:'Clothes-3',
@@ -72,7 +72,7 @@ export const dataAll = [{
     genre_type: {
       genreType:'Clothes'
     },
-    image: item3
+    image: Clothes
   },
   {
     user: {
@@ -81,11 +81,11 @@ export const dataAll = [{
       phone:'789-456-789',
       firstName:'Tian',
       lastName:'Li',
-      reviews:{
+      reviews:[{
         id:24,
         review_content:'review contents 4',
         created_at:'2022-08-15T22:25:34'
-      },
+      }]
     },
     product_id: 4,
     product_name:'shoes-4',
@@ -96,7 +96,7 @@ export const dataAll = [{
     genre_type: {
       genreType:'Shoes'
     },
-    image: item1
+    image: Shoes
   },
   { 
     user: {
@@ -105,11 +105,11 @@ export const dataAll = [{
       phone:'789-456-789',
       firstName:'Tian',
       lastName:'Li',
-      reviews:{
+      reviews:[{
         id:25,
         review_content:'review contents 5',
         created_at:'2022-08-15T22:25:34'
-      },
+      }]
     },
     product_id: 5,
     product_name:'bags-5',
@@ -120,7 +120,7 @@ export const dataAll = [{
     genre_type: {
       genreType:'Bags'
     },
-    image: item2
+    image: Bags
   },
   {
     user: {
@@ -129,11 +129,11 @@ export const dataAll = [{
       phone:'789-456-789',
       firstName:'Tian',
       lastName:'Li',
-      reviews:{
+      reviews:[{
         id:26,
         review_content:'review contents 6',
         created_at:'2022-08-15T22:25:34'
-      },
+      }]
     },
     product_id: 6,
     product_name:'Clothes-3',
@@ -144,5 +144,5 @@ export const dataAll = [{
     genre_type: {
       genreType:'Clothes'
     },
-    image: item3
+    image: Clothes
   }];

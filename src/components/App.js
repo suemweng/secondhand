@@ -1,20 +1,26 @@
-import React , { useState } from 'react';
+import React , { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import { message } from 'antd';
+import { getAllItems } from "../utils";
 
 
 function App() {
 
+  
   const [list, setList] = useState([]);
   const [acctInfo, setAcctInfo] = useState(false);
-  const [itemId, setItemId] = useState(null);
+  const [itemInfo, setItemInfo] = useState(null);
+
+  
 
   const searchOnSuccess = (data) => {
     setList(data);
     setAcctInfo(false);
-    setItemId(null);
+    setItemInfo(null);
+
+    console.log(`App data: ${data}`);
   }
 
   const acctInfoSelected = () => {
@@ -22,10 +28,39 @@ function App() {
   }
 
   const itemSelected = (itemId) => {
-    setItemId(itemId);
-    //alert('itemId received');
+    const authToken = localStorage.getItem("authToken");
+    if (authToken === null) {
+      message.error('Please log in');
+    } else {
+      const itemData = list.filter((item) => item.product_id === itemId);
+      setItemInfo(itemData[0]);
+      //alert(`itemId received: ${itemData[0].product_id}`);
+    }
+
   }
 
+  // DidMount to getAllItems
+  useEffect( () =>{
+    async function fetchData(){
+   // setLoading(true);
+
+    try {
+      const resp = await getAllItems();
+      //const resp = getAllItems();
+      searchOnSuccess(resp);
+      
+
+    } catch (error) {
+      message.error(error.message);
+    } finally {
+     // setLoading(false);
+    }
+  }
+  fetchData();
+  },[]);
+
+
+  console.log(`App list: ${list}`);
   return (
     <div className="App">
 
@@ -51,7 +86,7 @@ function App() {
       <Main 
         list={list} 
         acctInfo={acctInfo}
-        itemId={itemId}
+        itemInfo={itemInfo}
         searchOnSuccess={searchOnSuccess}
         itemSelected={itemSelected}/>
       <Footer />

@@ -22,12 +22,12 @@ class Login extends React.Component {
  
   onFinish = (data) => {
     login(data)
-      .then((data) => {
+      .then((resp) => {
         this.setState({
           displayModal: false,
         })
-        message.success(`Welcome back, ${data.name}`);
-        this.props.onSuccess();
+        message.success(`Welcome back, ${data.username}`);
+        this.props.onSuccess(resp.token);
       }).catch((err) => {
         message.error(err.message);
       })
@@ -36,8 +36,8 @@ class Login extends React.Component {
   render = () => {
     return (
       <>
-        <Button shape="round" onClick={this.signinOnClick} style={{ marginRight: '20px' }}>
-        Login</Button>
+        <Button shape="round" type="primary" onClick={this.signinOnClick} style={{ marginRight: '20px' }}>
+        Log in</Button>
         <Modal
           title="Log in"
           visible={this.state.displayModal}
@@ -51,7 +51,7 @@ class Login extends React.Component {
             preserve={false}
           >
             <Form.Item
-              name="user_id"
+              name="username"
               rules={[{ required: true, message: 'Please input your Username!' }]}
             >
               <Input prefix={<UserOutlined />} placeholder="Username" />
