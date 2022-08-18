@@ -83,7 +83,7 @@ class AcctInfo extends React.Component {
         return (
             <>
             { user !== null ?
-                <div style={{width: '100%', margin: "50px"}}>
+                <div style={{width: '90%', margin: "50px"}}>
                     {/* <Form
                         name="Account Information" 
                         onFinish = {this.onFinish} 
@@ -126,25 +126,20 @@ class AcctInfo extends React.Component {
                 </Button> */}
 
                 </div> : 
-                <div style={{width: '100%', margin: "50px"}}>
+                <div style={{width: '90%', margin: "50px"}}>
                  <Descriptions title="Account Information" bordered></Descriptions>
                 </div>
             }
 
-            <div style={{
-                    width: '100%', 
-                    margin: "50px 100px", }}>
+            <div style={{width: '100%', margin: "50px 100px", }}>
                 <div style={{
                     width:'100%', 
                     display:'flex',
                     justifyContent:'flex-start'
                 }}>
                 
-                <Descriptions title="Items Posted" bordered style={{
-                    width: '80%', 
-                   }}>
-                   </Descriptions>
-                   <ItemUpload />
+                    <Descriptions title="Products Posted" bordered style={{width: '90%',}}></Descriptions>
+                    <ItemUpload />
                  </div>
 
                 
@@ -152,7 +147,7 @@ class AcctInfo extends React.Component {
                     itemLayout="horizontal"
                     dataSource={this.state.itemsList}
                     style={{
-                        width: '80%', 
+                        width: '90%', 
                        }}
                     renderItem={item => (
                     <List.Item>
