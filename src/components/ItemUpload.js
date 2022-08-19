@@ -89,12 +89,12 @@ class ItemUpload extends React.Component {
     handleSubmit = async (values) => {
         const formData = new FormData();
         //const { files } = this.uploadRef.current;
-     
+
         // if (files.length > 3) {
         //   message.error("You can upload at most 3 pictures.");
         //   return;
         // }
-     
+
         // for (let i = 0; i < files.length; i++) {
         //   formData.append("images", files[i]);
         // }
@@ -242,6 +242,7 @@ class ItemUpload extends React.Component {
                 disabled={this.state.loading}
                 style={{maxWidth: 1000, margin: "auto"}}
             >
+
                 <Form.Item name="Title" label="Title" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
