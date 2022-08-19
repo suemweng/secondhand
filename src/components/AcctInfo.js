@@ -140,6 +140,7 @@ class AcctInfo extends React.Component {
                 
                     <Descriptions title="Products Posted" bordered style={{width: '90%',}}></Descriptions>
                     <ItemUpload />
+                
                  </div>
 
                 
