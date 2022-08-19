@@ -1,25 +1,44 @@
-import { Button, message, Form, Input, InputNumber, Layout, Modal } from "antd";
+import { Button, message, Form, Input, InputNumber, Layout, Modal, Select } from "antd";
 import React from "react";
 import AcctInfo from "./AcctInfo";
 import { uploadItem } from "../utils";
+import {ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from "../firebaseConfig.js";
 
+const genreTypes = [
+    { label: 'Clothes', value: 'Clothes' }, // remember to pass the key prop
+    { label: 'Bags', value: 'Bags' }, 
+    { label: 'Shoes', value: 'Shoes' }, 
+    { label: 'Furnitures', value: 'Furnitures'}, 
+    { label: 'Electronics', value: 'Electronics'}, 
+    { label: 'Misc', value: 'Misc' } ];
 
 class ItemUpload extends React.Component {
 
+  
+    uploadRef = React.createRef();
+    
 
     state = { 
         loading: false, 
         displayModal: false,
+        //percent: 0,
     };
 
-    uploadRef = React.createRef();
+
 
     uploadOnClick = () => {
         console.log("Upload Completed!")
     }
 
-    handleSubmit = async (values) => {
-        const formData = new FormData();
+    handleUpload =   () => {
+
+        let fburls = [];
+        
+        // if (!file) {
+        //     alert("Please choose a file first!")
+        // }
+
         const { files } = this.uploadRef.current;
      
         if (files.length > 3) {
@@ -28,28 +47,161 @@ class ItemUpload extends React.Component {
         }
      
         for (let i = 0; i < files.length; i++) {
-          formData.append("images", files[i]);
+
+            const storageRef = ref(storage, `/files/${files[i].name}`)
+        
+
+            const uploadTask = uploadBytesResumable(storageRef, files[i]);
+    
+    
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    // const curPercent = Math.round(
+                    //     (snapshot.bytesTransferred / snapshot.totalBytes + i / files.length) * 100
+                    // );
+         
+                    // // update progress
+                    // // setPercent(percent);
+                    // this.setState({
+                    //     percent: curPercent})
+                },
+                (err) => console.log(err),
+                 () => {
+                    // download url
+                     getDownloadURL(uploadTask.snapshot.ref).then((fburl) => {
+                        console.log(fburl);
+                        message.info(fburl);
+                        const obj = {url: `${fburl}`};
+                        fburls.push(obj);
+                        console.log(`firebase URLs: ${i} - ${fburls[i].url}`);
+                    });
+                }
+            ); 
+
+          
         }
+
+        
+        return fburls;
+    }
+
+    handleSubmit = async (values) => {
+        const formData = new FormData();
+        //const { files } = this.uploadRef.current;
+
+        // if (files.length > 3) {
+        //   message.error("You can upload at most 3 pictures.");
+        //   return;
+        // }
+
+        // for (let i = 0; i < files.length; i++) {
+        //   formData.append("images", files[i]);
+        // }
+       // const filesURL = await this.handleUpload();
+
+       
+        // if (!file) {
+        //     alert("Please choose a file first!")
+        // }
+
+
+
+        const { files } = this.uploadRef.current;
      
-        formData.append("product_name", values.product_name);
-        formData.append("price", values.price);
-        formData.append("genre_type", values.genre_type);
-        formData.append("description", values.description);
-     
+        if (files.length > 3) {
+          message.error("You can upload at most 3 pictures.");
+          return;
+        }
+
         this.setState({loading: true,});
 
-        console.log(formData);
+        // upload images files to firebase
+        const uploadPromises =[];
+        const urlPromises = [];
+             
+        for (let i = 0; i < files.length; i++) {
 
-        try {
-          await uploadItem(formData);
-          message.success("Successfully Submitted!");
-        } catch (error) {
-          message.error(error.message);
-        } finally {
-          this.setState({
-            loading: false,
-            displayModal: false,});
+            const storageRef = ref(storage, `/files/${files[i].name}`)
+        
+            const uploadTask = uploadBytesResumable(storageRef, files[i]);
+            uploadPromises.push(uploadTask);
+    
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    // const curPercent = Math.round(
+                    //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    // );
+         
+                    // // update progress
+                    // //setPercent(percent);
+                    // this.setState({
+                    //     percent: curPercent})
+                },
+                (err) => console.log(err),
+                 () => {
+                    // download url
+                   
+                    const urlPromise = getDownloadURL(uploadTask.snapshot.ref).then((fburl) => {
+                        //console.log("completed uploading...")
+                        console.log(`url-${i}:`);
+                        console.log(fburl);                       
+                        const obj = {url: `${fburl}`};  
+                        return obj;
+                    });
+                    urlPromises.push(urlPromise);                    
+                }
+            );            
+          
         }
+
+        // console.log(uploadPromises.length);
+        // console.log(uploadPromises);
+        // console.log(urlPromises.length);
+        // console.log(urlPromises);
+        await Promise.all(uploadPromises).then(async (resp)=>{
+            console.log("upload resp:")
+            console.log(resp);
+            const urls = await Promise.all(urlPromises).then((urlResp) => {
+                console.log("urlPromises:");
+                console.log(urlPromises);
+                console.log("urlPromises end");
+                return urlResp;
+            });
+            console.log("urls:");
+            console.log(urls);
+            formData.append("images", JSON.stringify(urls));           
+            console.log("uploadPromises end");        
+        })
+
+
+            formData.append("product_name", values.Title);
+            formData.append("price", values.Price);
+            formData.append("genre_type", values.Category);
+            formData.append("description", values.Description);
+            console.log("formData append done");
+
+            console.log("form data:");
+            console.log(formData.get('product_name'));
+            console.log(formData.get('price'));
+            console.log(formData.get('genre_type'));
+            console.log(formData.get('description'));
+            console.log(formData.get('images'));
+            
+            try {
+              await uploadItem(formData);
+              message.success("Successfully Submitted!");
+            } catch (error) {
+              message.error(error.message);
+            } finally {
+              this.setState({
+                loading: false,
+                displayModal: false,});
+            }
+
+        console.log("function end");
+
     };
 
     addOnClick = () => {
@@ -87,29 +239,36 @@ class ItemUpload extends React.Component {
                 {...Layout} 
                 name="Please Upload Item"
                 onFinish={this.handleSubmit}
+                disabled={this.state.loading}
                 style={{maxWidth: 1000, margin: "auto"}}
             >
-                <Form.Item name="product_name" label="Title" rules={[{ required: true }]}>
+
+                <Form.Item name="Title" label="Title" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="price" label="Price" rules={[{ required: true }]}>
+                <Form.Item name="Price" label="Price" rules={[{ required: true }]}>
                     <InputNumber />
                 </Form.Item>
-                <Form.Item name="genre_type" label="Category" rules={[{ required: true }]}>
-                    <Input />
+                <Form.Item name="Category" label="Category" rules={[{ required: true }]}>
+                    <Select>
+                        <Select.Option options={genreTypes} />
+                    </Select>
                 </Form.Item>
-                <Form.Item name="description" label="Description" rules={[{ required: true }]}>
+                <Form.Item name="Description" label="Description" rules={[{ required: true }]}>
                     <Input.TextArea autoSize={{ minRows: 3, maxRows: 8 }} />
                 </Form.Item>
-                <Form.Item name="images" label="Pictures" rules={[{ required: true }]}>
-                    <input type="file" accept="image/png, image/jpeg" ref={this.uploadRef} multiple={true}/>
-                    Choose Files
+                <Form.Item name="Picture" label="Pictures" rules={[{ required: false }]}>
+                    <input type="file" accept="image/*" ref={this.uploadRef} multiple={true}/>
+                    {/* <button onClick={this.handleUpload}>Upload to Firebase</button> */}
+                    <br />
+                    {this.state.loading? <div style={{color: 'red'}}>Uploading pictures ...</div> : <br />}
                 </Form.Item>
                 <Form.Item>
                     {/* <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.uploadOnClick}> */}
-                    <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading}>
+                    <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} style={{alignContent:'center'}}>
                         Submit
                     </Button>
+                    
                 </Form.Item>
             </Form>
         </Modal>    
