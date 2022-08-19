@@ -149,7 +149,7 @@ function SearchPage ({list, onSuccess, itemSelected}) {
               }}
           >
             <div style={{textAlign: 'left',fontWeight:"bold",fontSize:"15px"}}>
-              Categories
+              Category
             </div>
               <Menu
               mode="inline"

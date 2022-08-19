@@ -37,7 +37,7 @@ class Login extends React.Component {
     return (
       <>
         <Button shape="round" type="primary" onClick={this.signinOnClick} style={{ marginRight: '20px' }}>
-        Log in</Button>
+        Log In</Button>
         <Modal
           title="Log in"
           visible={this.state.displayModal}

@@ -121,7 +121,7 @@ class AcctInfo extends React.Component {
                     renderItem={item => (
                     <List.Item>
                         <List.Item.Meta
-                        avatar={<Avatar src={item.image} />}
+                        avatar={<Avatar src={item.images} />}
                         title={`Item ${item.product_id} - ${item.product_name}`}
                         description={item.description}
                         />

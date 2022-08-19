@@ -85,7 +85,7 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
                     <Button shape="round" type="primary" style={{margin: '10px'}} onClick={acctInfoOnClick}>
                         My Account</Button> 
                         <Button shape="round" type="primary" style={{margin: '15px'}} onClick={signoutOnClick}>
-                        Logout</Button> 
+                        Log Out</Button> 
                 </div> :
                 (
                     <>
