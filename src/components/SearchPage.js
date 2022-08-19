@@ -3,8 +3,9 @@ import { Button, Col, Layout, Menu, message, Row, Tooltip, List, Card } from 'an
 import { getAllItems, searchItemsByGenreId } from "../utils";
 
 import Shoes from '../assets/images/Shoes.webp';
-import Bags from '../assets/images/Bags.jpeg';
+// import Bags from '../assets/images/Bags.jpeg';
 import Clothes from '../assets/images/Clothes.jpeg';
+const Bags = 'https://firebasestorage.googleapis.com/v0/b/secondhand-upload.appspot.com/o/files%2FBags.jpeg?alt=media&token=3ce8b4b5-6c63-446e-b9e9-4d9d7f0b20ee';
 
 
 const { Content, Sider } = Layout;

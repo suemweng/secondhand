@@ -129,7 +129,7 @@ class ItemPage extends React.Component{
                     >
                         {CarouselData.map((slide, index) => (
                             <div key={index}>
-                                <Image src={slide.image} width="100%" />
+                                <Image src={slide.url} width="100%" />
                             </div>
                         ))}
                 </Carousel>}

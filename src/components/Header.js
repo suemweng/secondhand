@@ -10,6 +10,7 @@ const { Search } = Input;
 function Header ({searchOnSuccess, acctInfoSelected}) {
 
     const [loggedIn, setLoggedIn] = useState(false);
+    const [inputValue, setInputValue] = useState('');
 
     // DidMount to getAllItems
     useEffect( () => {
@@ -51,6 +52,7 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
             //const resp = await searchItemsByName(value);
             const resp = await searchItemsByName(value);
             searchOnSuccess(resp);
+            setInputValue('');
             message.info(`Search Key: ${value}`);
             console.log(`Search Key: ${resp}`);
           } catch (error) {
@@ -70,6 +72,9 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
             <Search
                 placeholder="input search text"
                 onSearch={onSearch}
+                enterButton
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
                 style={{width: 700, margin: 100}}
             />
 
