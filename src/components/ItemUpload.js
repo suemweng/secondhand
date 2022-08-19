@@ -26,86 +26,8 @@ class ItemUpload extends React.Component {
     };
 
 
-
-    uploadOnClick = () => {
-        console.log("Upload Completed!")
-    }
-
-    handleUpload =   () => {
-
-        let fburls = [];
-        
-        // if (!file) {
-        //     alert("Please choose a file first!")
-        // }
-
-        const { files } = this.uploadRef.current;
-     
-        if (files.length > 3) {
-          message.error("You can upload at most 3 pictures.");
-          return;
-        }
-     
-        for (let i = 0; i < files.length; i++) {
-
-            const storageRef = ref(storage, `/files/${files[i].name}`)
-        
-
-            const uploadTask = uploadBytesResumable(storageRef, files[i]);
-    
-    
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    // const curPercent = Math.round(
-                    //     (snapshot.bytesTransferred / snapshot.totalBytes + i / files.length) * 100
-                    // );
-         
-                    // // update progress
-                    // // setPercent(percent);
-                    // this.setState({
-                    //     percent: curPercent})
-                },
-                (err) => console.log(err),
-                 () => {
-                    // download url
-                     getDownloadURL(uploadTask.snapshot.ref).then((fburl) => {
-                        console.log(fburl);
-                        message.info(fburl);
-                        const obj = {url: `${fburl}`};
-                        fburls.push(obj);
-                        console.log(`firebase URLs: ${i} - ${fburls[i].url}`);
-                    });
-                }
-            ); 
-
-          
-        }
-
-        
-        return fburls;
-    }
-
     handleSubmit = async (values) => {
         const formData = new FormData();
-        //const { files } = this.uploadRef.current;
-
-        // if (files.length > 3) {
-        //   message.error("You can upload at most 3 pictures.");
-        //   return;
-        // }
-
-        // for (let i = 0; i < files.length; i++) {
-        //   formData.append("images", files[i]);
-        // }
-       // const filesURL = await this.handleUpload();
-
-       
-        // if (!file) {
-        //     alert("Please choose a file first!")
-        // }
-
-
 
         const { files } = this.uploadRef.current;
      
@@ -190,7 +112,7 @@ class ItemUpload extends React.Component {
             console.log(formData.get('images'));
             
             try {
-              await uploadItem(formData);
+              // await uploadItem(formData);
               message.success("Successfully Submitted!");
             } catch (error) {
               message.error(error.message);
@@ -200,7 +122,7 @@ class ItemUpload extends React.Component {
                 displayModal: false,});
             }
 
-        console.log("function end");
+        console.log("Submit function end");
 
     };
 
@@ -263,7 +185,6 @@ class ItemUpload extends React.Component {
                 {this.state.loading? <div style={{color: 'red'}}>Uploading pictures ...</div> : <br />}
                 <br />
                 <Form.Item>
-                    {/* <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.uploadOnClick}> */}
                     <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} style={{alignContent:'center'}}>
                         Submit
                     </Button>

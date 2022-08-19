@@ -31,7 +31,7 @@ function SearchPage ({list, onSuccess, itemSelected}) {
         //const resp = await searchItemsByItemId(genreId);
         // setData(resp);
         itemSelected(itemId);
-        message.info(`Item selected: item ${itemId}`);
+        //message.info(`Item selected: item ${itemId}`);
       } catch (error) {
         message.error(error.message);
       } finally {

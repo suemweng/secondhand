@@ -90,7 +90,16 @@ class AcctInfo extends React.Component {
                         <Descriptions.Item label="Name"> {`${user.firstName} ${user.lastName}`}</Descriptions.Item>
                         <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
                         <Descriptions.Item label="Phone">{user.phone}</Descriptions.Item>
-                        <Descriptions.Item label="Reviews">{user.reviews.length == 0 ? "(no review)" : user.reviews[0].review_content}</Descriptions.Item>
+                        <Descriptions.Item label="Reviews">
+                            {user.reviews.length == 0 ? "(no review)" : 
+                                <List
+                                    dataSource={user.reviews}
+                                    renderItem={review => (
+                                        <List.Item>{review.review_content}</List.Item>
+                                    )}
+                                />
+                            }
+                        </Descriptions.Item>
                     </Descriptions>
 
                 </div> : 
@@ -128,7 +137,6 @@ class AcctInfo extends React.Component {
                     </List.Item>
                     )}
                 />
-                    {/* <ItemUpload /> */}
             </div>
             
             </>

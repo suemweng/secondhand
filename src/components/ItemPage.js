@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Descriptions, Carousel, Image, Card} from 'antd';
+import { Descriptions, Carousel, Image, Card, List} from 'antd';
 import {
     LeftCircleFilled,
     RightCircleFilled,
@@ -143,17 +143,26 @@ class ItemPage extends React.Component{
                     padding:'0px 30px'
                 }}>
                 <Descriptions title="Product Information" bordered>
-                <Descriptions.Item label="Title"> {`${name}`}</Descriptions.Item>
-                <Descriptions.Item label="Price">{`$ ${price}`}</Descriptions.Item>
-                <Descriptions.Item label="Category">{genre}</Descriptions.Item>
-                <Descriptions.Item label="Description">{description}</Descriptions.Item>
+                    <Descriptions.Item label="Title"> {`${name}`}</Descriptions.Item>
+                    <Descriptions.Item label="Price">{`$ ${price}`}</Descriptions.Item>
+                    <Descriptions.Item label="Category">{genre}</Descriptions.Item>
+                    <Descriptions.Item label="Description">{description}</Descriptions.Item>
                 </Descriptions>
 
                 <Descriptions title="Seller Information" bordered>
-                <Descriptions.Item label="Seller Name"> {`${firstName} ${lastName}`}</Descriptions.Item>
-                <Descriptions.Item label="Email">{email}</Descriptions.Item>
-                <Descriptions.Item label="Phone">{phone}</Descriptions.Item>
-                <Descriptions.Item label="Reviews">{reviews.length == 0 ? "(no review)" : reviews[0].review_content}</Descriptions.Item>
+                    <Descriptions.Item label="Seller Name"> {`${firstName} ${lastName}`}</Descriptions.Item>
+                    <Descriptions.Item label="Email">{email}</Descriptions.Item>
+                    <Descriptions.Item label="Phone">{phone}</Descriptions.Item>
+                    <Descriptions.Item label="Reviews">
+                        {reviews.length == 0 ? "(no review)" : 
+                            <List
+                                dataSource={reviews}
+                                renderItem={review => (
+                                    <List.Item>{review.review_content}</List.Item>
+                                )}
+                            />
+                        }
+                    </Descriptions.Item>
                 </Descriptions>
             </div>
             </>
