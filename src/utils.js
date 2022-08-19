@@ -7,9 +7,12 @@ const allItemsUrl = `${domain}/filters?zipcode&city&min_price&max_price`;
 const searchItemsByGenreIdUrl = `${domain}/products/genres?genre_type=`;
 const searchItemsByNameUrl = `${domain}/products/search/`;
 const searchMyItemsUrl = `${domain}/products`;
+const getMyAcctInfoUrl = `${domain}/user/getinfo`;
 const loginUrl = `${domain}/user/authenticate`;
 const registerUrl = `${domain}/user/register`;
 const uploadItemUrl = `${domain}/products`;
+
+
 
 
 
@@ -92,6 +95,22 @@ export const searchItemsByName = (name) => {
       }
       return response.json();
   })
+}
+
+export const getMyAcctInfo = () => {
+  //return dataAll;
+   const authToken = localStorage.getItem("authToken");
+   return fetch(getMyAcctInfoUrl, {
+    headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+     .then((response) => {
+       if (response.status !== 200) {
+           throw Error('Fail to get your account info');
+       }
+       return response.json();
+   })
 }
 
 export const getMyItems = () => {
