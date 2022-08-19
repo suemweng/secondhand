@@ -139,7 +139,8 @@ class ItemPage extends React.Component{
                     width:'50%', 
                     display:'flex',
                     flexDirection:'column',
-                    justifyContent:'space-around'
+                    justifyContent:'space-around',
+                    padding:'0px 30px'
                 }}>
                 <Descriptions title="Product Information" bordered>
                 <Descriptions.Item label="Title"> {`${name}`}</Descriptions.Item>
