@@ -257,12 +257,11 @@ class ItemUpload extends React.Component {
                 <Form.Item name="Description" label="Description" rules={[{ required: true }]}>
                     <Input.TextArea autoSize={{ minRows: 3, maxRows: 8 }} />
                 </Form.Item>
-                <Form.Item name="Picture" label="Pictures" rules={[{ required: false }]}>
+                <Form.Item name="Picture" label="Pictures" rules={[{ required: true }]}>
                     <input type="file" accept="image/*" ref={this.uploadRef} multiple={true}/>
-                    {/* <button onClick={this.handleUpload}>Upload to Firebase</button> */}
-                    <br />
-                    {this.state.loading? <div style={{color: 'red'}}>Uploading pictures ...</div> : <br />}
                 </Form.Item>
+                {this.state.loading? <div style={{color: 'red'}}>Uploading pictures ...</div> : <br />}
+                <br />
                 <Form.Item>
                     {/* <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.uploadOnClick}> */}
                     <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} style={{alignContent:'center'}}>
