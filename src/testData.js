@@ -1,6 +1,6 @@
-import Shoes from './assets/images/Shoes.webp';
-import Bags from './assets/images/Bags.jpeg';
-import Clothes from './assets/images/Clothes.jpeg';
+import Shoes from './assets/images/genre_photos/Shoes.webp';
+import Bags from './assets/images/genre_photos/Bags.jpeg';
+import Clothes from './assets/images/genre_photos/Clothes.jpeg';
 
 export const dataAll = [{
     user: {

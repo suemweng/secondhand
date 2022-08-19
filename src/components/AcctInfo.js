@@ -2,7 +2,7 @@ import { Button, Form, message, Descriptions, Avatar, List  } from "antd";
 import React from "react";
 import ItemUpload from "./ItemUpload";
 import { dataAll } from "../testData";
-import { getAllItems, getMyItems } from "../utils";
+import { getAllItems, getMyAcctInfo, getMyItems } from "../utils";
 
 const testData = {
     username:'user123',
@@ -54,12 +54,13 @@ class AcctInfo extends React.Component {
 
     
         try {
-           // const resp = await getAllItems();
-            const resp = await getMyItems();
+           
+            const itemResp = await getMyItems();
+            const acctResp = await getMyAcctInfo();
          
             this.setState({
-                itemsList: resp,
-                user: resp[0].user,
+                itemsList: itemResp,
+                user: acctResp,
             });
            // console.log(this.state.itemsList);
             //console.log(this.state.itemsList[0]);
@@ -84,31 +85,6 @@ class AcctInfo extends React.Component {
             <>
             { user !== null ?
                 <div style={{width: '90%', margin: "50px"}}>
-                    {/* <Form
-                        name="Account Information" 
-                        onFinish = {this.onFinish} 
-                        style={{margin: "auto"}}
-                    >
-                        <Form.Item name="Username:" rules={[{required: true,}]}>
-                        </Form.Item>
-                        <Form.Item name="Alias:" rules={[{required: true,}]}>
-                        </Form.Item>
-                        <Form.Item name="Location:" rules={[{required: true,}]}>
-                        </Form.Item>
-                    </Form>
-                    <Form 
-                        name="Uploaded Items" 
-                        ref = {this.formRef} 
-                        onFinish = {this.onFinish}
-                        style={{margin: "auto"}}
-                    >
-                        <Form.Item name="Item1:" rules={[{required: true,}]}>
-                        </Form.Item>
-                        <Form.Item name="Item2:" rules={[{required: true,}]}>
-                        </Form.Item>
-                        <Form.Item name="Item3:" rules={[{required: true,}]}>
-                        </Form.Item>
-                    </Form> */}
                     <Descriptions title="Account Information" bordered>
                         <Descriptions.Item label="Username"> {user.username}</Descriptions.Item>
                         <Descriptions.Item label="Name"> {`${user.firstName} ${user.lastName}`}</Descriptions.Item>
@@ -116,14 +92,6 @@ class AcctInfo extends React.Component {
                         <Descriptions.Item label="Phone">{user.phone}</Descriptions.Item>
                         <Descriptions.Item label="Reviews">{user.reviews.length == 0 ? "(no review)" : user.reviews[0].review_content}</Descriptions.Item>
                     </Descriptions>
-                {/* <Button
-                    onClick={this.onClick}
-                    disabled={this.state.loading}
-                    shape="default"
-                    type="primary"
-                >
-                    Add Item
-                </Button> */}
 
                 </div> : 
                 <div style={{width: '90%', margin: "50px"}}>
