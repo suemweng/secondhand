@@ -49,12 +49,13 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
     const onSearch = async (value) => {
 
         try {
-            //const resp = await searchItemsByName(value);
             const resp = await searchItemsByName(value);
             searchOnSuccess(resp);
             setInputValue('');
-            message.info(`Search Key: ${value}`);
-            console.log(`Search Key: ${resp}`);
+            if (resp.length === 0) {
+                message.info(`No matched products found: ${value}`);
+            } 
+            
           } catch (error) {
             message.error(error.message);
           }
