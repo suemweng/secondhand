@@ -14,98 +14,27 @@ const genreTypes = [
     { label: 'Misc', value: 'Misc' } ];
 
 class ItemUpload extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false, 
+            displayModal: false,
+            //percent: 0,
+        };
+    }
   
     uploadRef = React.createRef();
     
 
-    state = { 
-        loading: false, 
-        displayModal: false,
-        //percent: 0,
-    };
+    // state = { 
+    //     loading: false, 
+    //     displayModal: false,
+    //     //percent: 0,
+    // };
 
-
-
-    uploadOnClick = () => {
-        console.log("Upload Completed!")
-    }
-
-    handleUpload =   () => {
-
-        let fburls = [];
-        
-        // if (!file) {
-        //     alert("Please choose a file first!")
-        // }
-
-        const { files } = this.uploadRef.current;
-     
-        if (files.length > 3) {
-          message.error("You can upload at most 3 pictures.");
-          return;
-        }
-     
-        for (let i = 0; i < files.length; i++) {
-
-            const storageRef = ref(storage, `/files/${files[i].name}`)
-        
-
-            const uploadTask = uploadBytesResumable(storageRef, files[i]);
-    
-    
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    // const curPercent = Math.round(
-                    //     (snapshot.bytesTransferred / snapshot.totalBytes + i / files.length) * 100
-                    // );
-         
-                    // // update progress
-                    // // setPercent(percent);
-                    // this.setState({
-                    //     percent: curPercent})
-                },
-                (err) => console.log(err),
-                 () => {
-                    // download url
-                     getDownloadURL(uploadTask.snapshot.ref).then((fburl) => {
-                        console.log(fburl);
-                        message.info(fburl);
-                        const obj = {url: `${fburl}`};
-                        fburls.push(obj);
-                        console.log(`firebase URLs: ${i} - ${fburls[i].url}`);
-                    });
-                }
-            ); 
-
-          
-        }
-
-        
-        return fburls;
-    }
 
     handleSubmit = async (values) => {
         const formData = new FormData();
-        //const { files } = this.uploadRef.current;
-
-        // if (files.length > 3) {
-        //   message.error("You can upload at most 3 pictures.");
-        //   return;
-        // }
-
-        // for (let i = 0; i < files.length; i++) {
-        //   formData.append("images", files[i]);
-        // }
-       // const filesURL = await this.handleUpload();
-
-       
-        // if (!file) {
-        //     alert("Please choose a file first!")
-        // }
-
-
 
         const { files } = this.uploadRef.current;
      
@@ -143,13 +72,14 @@ class ItemUpload extends React.Component {
                  () => {
                     // download url
                    
-                    const urlPromise = getDownloadURL(uploadTask.snapshot.ref).then((fburl) => {
-                        //console.log("completed uploading...")
-                        console.log(`url-${i}:`);
-                        console.log(fburl);                       
-                        const obj = {url: `${fburl}`};  
-                        return obj;
-                    });
+                    const urlPromise = getDownloadURL(uploadTask.snapshot.ref);
+                    // .then((fburl) => {
+                    //     //console.log("completed uploading...")
+                    //     console.log(`url-${i}:`);
+                    //     console.log(fburl);                       
+                    //     const obj = {url: `${fburl}`};  
+                    //     return obj;
+                    // });
                     urlPromises.push(urlPromise);                    
                 }
             );            
@@ -166,12 +96,14 @@ class ItemUpload extends React.Component {
             const urls = await Promise.all(urlPromises).then((urlResp) => {
                 console.log("urlPromises:");
                 console.log(urlPromises);
+                console.log("urlResp:");
+                console.log(urlResp);
                 console.log("urlPromises end");
-                return urlResp;
+                return urlResp.join(',');
             });
             console.log("urls:");
             console.log(urls);
-            formData.append("images", JSON.stringify(urls));           
+            formData.append("images", urls);           
             console.log("uploadPromises end");        
         })
 
@@ -188,10 +120,12 @@ class ItemUpload extends React.Component {
             console.log(formData.get('genre_type'));
             console.log(formData.get('description'));
             console.log(formData.get('images'));
+
             
             try {
               await uploadItem(formData);
               message.success("Successfully Submitted!");
+              this.props.refresh();
             } catch (error) {
               message.error(error.message);
             } finally {
@@ -200,7 +134,7 @@ class ItemUpload extends React.Component {
                 displayModal: false,});
             }
 
-        console.log("function end");
+        console.log("Submit function end");
 
     };
 
@@ -257,14 +191,12 @@ class ItemUpload extends React.Component {
                 <Form.Item name="Description" label="Description" rules={[{ required: true }]}>
                     <Input.TextArea autoSize={{ minRows: 3, maxRows: 8 }} />
                 </Form.Item>
-                <Form.Item name="Picture" label="Pictures" rules={[{ required: false }]}>
+                <Form.Item name="Picture" label="Pictures" rules={[{ required: true }]}>
                     <input type="file" accept="image/*" ref={this.uploadRef} multiple={true}/>
-                    {/* <button onClick={this.handleUpload}>Upload to Firebase</button> */}
-                    <br />
-                    {this.state.loading? <div style={{color: 'red'}}>Uploading pictures ...</div> : <br />}
                 </Form.Item>
+                {this.state.loading? <div style={{color: 'red'}}>Uploading pictures ...</div> : <br />}
+                <br />
                 <Form.Item>
-                    {/* <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.uploadOnClick}> */}
                     <Button shape="default" type="primary" htmlType="submit" loading={this.state.loading} style={{alignContent:'center'}}>
                         Submit
                     </Button>

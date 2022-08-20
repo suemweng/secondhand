@@ -10,6 +10,7 @@ function App() {
 
   
   const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [acctInfo, setAcctInfo] = useState(false);
   const [itemInfo, setItemInfo] = useState(null);
 
@@ -20,7 +21,7 @@ function App() {
     setAcctInfo(false);
     setItemInfo(null);
 
-    console.log(`App data: ${data}`);
+    //console.log(`App data: ${data}`);
   }
 
   const acctInfoSelected = () => {
@@ -41,46 +42,26 @@ function App() {
 
   // DidMount to getAllItems
   useEffect( () =>{
-    async function fetchData(){
-   // setLoading(true);
+      async function fetchData() {
+      setLoading(true);
 
-    try {
-      const resp = await getAllItems();
-      //const resp = getAllItems();
-      searchOnSuccess(resp);
-      
-
-    } catch (error) {
-      message.error(error.message);
-    } finally {
-     // setLoading(false);
+      try {
+        const resp = await getAllItems();
+        searchOnSuccess(resp);
+        
+      } catch (error) {
+        message.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  fetchData();
+    fetchData();
   },[]);
 
 
-  console.log(`App list: ${list}`);
+  //console.log(`App list: ${list}`);
   return (
     <div className="App">
-
-
-      {       // react default
-
-      /* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
 
       <Header searchOnSuccess={searchOnSuccess} acctInfoSelected={acctInfoSelected}/>
       <Main 

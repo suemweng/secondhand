@@ -80,15 +80,17 @@ export const searchItemsByName = (name) => {
   //return dataAll.filter((item) => item.product_name === name);
   const authToken = localStorage.getItem("authToken");
 
-  return fetch(`${searchItemsByNameUrl}${name}`, {
-    headers: {
-        //Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb3NlIiwiZXhwIjoxNjYwNzkzOTkyLCJpYXQiOjE2NjA3MDc1OTJ9.E8-wX_qP6G7X4nOEAkA0J6S6KrfR2Bdih_HfLnIlST0",
-        Authorization: `Bearer ${authToken}`,
-      },
-    }).then((response) => {
-      if (response.status === 403) {
-        throw Error('Please log in');
-      }
+  return fetch(`${searchItemsByNameUrl}${name}`
+  // , {
+  //   headers: {
+  //       //Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb3NlIiwiZXhwIjoxNjYwNzkzOTkyLCJpYXQiOjE2NjA3MDc1OTJ9.E8-wX_qP6G7X4nOEAkA0J6S6KrfR2Bdih_HfLnIlST0",
+  //       Authorization: `Bearer ${authToken}`,
+  //     },
+  //   }
+    ).then((response) => {
+      // if (response.status === 403) {
+      //   throw Error('Please log in');
+      // }
       
       if (response.status !== 200) {
           throw Error('Fail to find the product');

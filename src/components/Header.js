@@ -35,10 +35,9 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
         acctInfoSelected();
     }
 
-    const getHomePage = async() => {
+    const getHomePage = async () => {
         try {
             const resp = await getAllItems();
-            //const resp = getAllItems();
             searchOnSuccess(resp);
     
           } catch (error) {
@@ -76,7 +75,7 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
                 enterButton
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                style={{width: 700, margin: 100}}
+                style={{width: "40%", margin: 100}}
             />
 
                 {
@@ -85,7 +84,7 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
                     <Button shape="round" type="primary" style={{margin: '10px'}} onClick={acctInfoOnClick}>
                         My Account</Button> 
                         <Button shape="round" type="primary" style={{margin: '15px'}} onClick={signoutOnClick}>
-                        Logout</Button> 
+                        Log Out</Button> 
                 </div> :
                 (
                     <>

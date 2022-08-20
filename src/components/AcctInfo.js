@@ -1,26 +1,28 @@
 import { Button, Form, message, Descriptions, Avatar, List  } from "antd";
+import { AntDesignOutlined } from '@ant-design/icons';
 import React from "react";
 import ItemUpload from "./ItemUpload";
 import { dataAll } from "../testData";
 import { getAllItems, getMyAcctInfo, getMyItems } from "../utils";
+import Misc from '../assets/images/genre_photos/Misc.png';
 
-const testData = {
-    username:'user123',
-    firstName:'User',
-    lastName:'123',
-    email:'user123@gmail.com',
-    phone:'123-456-888',
-    review:[{
-        id: 11,
-        review_content: "review contents 2",
-        created_at: "2022-08-14T23:21:47"
-    },
-    {
-        id: 12,
-        review_content: "review contents 1",
-        created_at: "2022-08-14T23:21:57"
-    }]
-}
+// const testData = {
+//     username:'user123',
+//     firstName:'User',
+//     lastName:'123',
+//     email:'user123@gmail.com',
+//     phone:'123-456-888',
+//     review:[{
+//         id: 11,
+//         review_content: "review contents 2",
+//         created_at: "2022-08-14T23:21:47"
+//     },
+//     {
+//         id: 12,
+//         review_content: "review contents 1",
+//         created_at: "2022-08-14T23:21:57"
+//     }]
+// }
 
 
 
@@ -36,9 +38,9 @@ class AcctInfo extends React.Component {
         console.log("Completed!");
     };
 
-    onClick = () => {
-        return <ItemUpload />;
-    }
+    // onClick = () => {
+    //     return <ItemUpload />;
+    // }
 
     // DidMount to getAllItems
     componentDidMount() {
@@ -90,7 +92,16 @@ class AcctInfo extends React.Component {
                         <Descriptions.Item label="Name"> {`${user.firstName} ${user.lastName}`}</Descriptions.Item>
                         <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
                         <Descriptions.Item label="Phone">{user.phone}</Descriptions.Item>
-                        <Descriptions.Item label="Reviews">{user.reviews.length == 0 ? "(no review)" : user.reviews[0].review_content}</Descriptions.Item>
+                        <Descriptions.Item label="Reviews">
+                            {user.reviews.length == 0 ? "(no review)" : 
+                                <List
+                                    dataSource={user.reviews}
+                                    renderItem={review => (
+                                        <List.Item>{review.review_content}</List.Item>
+                                    )}
+                                />
+                            }
+                        </Descriptions.Item>
                     </Descriptions>
 
                 </div> : 
@@ -107,7 +118,7 @@ class AcctInfo extends React.Component {
                 }}>
                 
                     <Descriptions title="Products Posted" bordered style={{width: '90%',}}></Descriptions>
-                    <ItemUpload />
+                    <ItemUpload refresh={this.loadData}/>
 
                  </div>
 
@@ -121,14 +132,13 @@ class AcctInfo extends React.Component {
                     renderItem={item => (
                     <List.Item>
                         <List.Item.Meta
-                        avatar={<Avatar src={item.image} />}
+                        avatar={item.images.length !== 0 ? <Avatar size="large" src={item.images[0].image_url} /> : <Avatar  size="large" src={Misc} />}
                         title={`Item ${item.product_id} - ${item.product_name}`}
                         description={item.description}
                         />
                     </List.Item>
                     )}
                 />
-                    {/* <ItemUpload /> */}
             </div>
             
             </>
