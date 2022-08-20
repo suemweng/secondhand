@@ -42,20 +42,20 @@ function App() {
 
   // DidMount to getAllItems
   useEffect( () =>{
-    async function fetchData(){
-    setLoading(true);
+      async function fetchData() {
+      setLoading(true);
 
-    try {
-      const resp = await getAllItems();
-      searchOnSuccess(resp);
-      
-    } catch (error) {
-      message.error(error.message);
-    } finally {
-      setLoading(false);
+      try {
+        const resp = await getAllItems();
+        searchOnSuccess(resp);
+        
+      } catch (error) {
+        message.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
-  fetchData();
+    fetchData();
   },[]);
 
 

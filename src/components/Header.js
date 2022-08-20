@@ -35,10 +35,9 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
         acctInfoSelected();
     }
 
-    const getHomePage = async() => {
+    const getHomePage = async () => {
         try {
             const resp = await getAllItems();
-            //const resp = getAllItems();
             searchOnSuccess(resp);
     
           } catch (error) {
