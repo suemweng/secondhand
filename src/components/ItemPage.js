@@ -58,7 +58,7 @@ class ItemPage extends React.Component{
 
         return ( 
             <>
-            <div style={{width:'50%', display:'flex', justifyContent:'center'}}>
+            <div style={{width:'42%', display:'flex', justifyContent:'center'}}>
 
                 <Card
                     style={{width:'80%', justifyItems:'center'}}
@@ -80,7 +80,7 @@ class ItemPage extends React.Component{
                 </Card>
             </div>
             <div className="mt-8" style={{
-                    width:'50%', 
+                    width:'58%', 
                     display:'flex',
                     flexDirection:'column',
                     justifyContent:'space-around',
