@@ -21,7 +21,7 @@ function App() {
     setAcctInfo(false);
     setItemInfo(null);
 
-    console.log(`App data: ${data}`);
+    //console.log(`App data: ${data}`);
   }
 
   const acctInfoSelected = () => {
@@ -59,27 +59,9 @@ function App() {
   },[]);
 
 
-  console.log(`App list: ${list}`);
+  //console.log(`App list: ${list}`);
   return (
     <div className="App">
-
-
-      {       // react default
-
-      /* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
 
       <Header searchOnSuccess={searchOnSuccess} acctInfoSelected={acctInfoSelected}/>
       <Main 

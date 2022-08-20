@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Descriptions, Carousel, Image, Card, List} from 'antd';
 import {
-    LeftCircleFilled,
-    RightCircleFilled,
+    CaretLeftOutlined,
+    CaretRightOutlined,
     InfoCircleOutlined,
+    RightOutlined,
 } from "@ant-design/icons";
 import { CarouselData } from "./CarouselData";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import Swipe from "react-easy-swipe";
+
 
 import Shoes from '../assets/images/genre_photos/Shoes.webp';
 import Bags from '../assets/images/genre_photos/Bags.jpeg';
@@ -21,7 +21,7 @@ class ItemPage extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            currentSlide: 0,
+            //currentSlide: 0,
             paused: false,
         };
     }
@@ -68,8 +68,8 @@ class ItemPage extends React.Component{
                     dots={true}
                     arrows={true}
                     speed={500}
-                    prevArrow={<LeftCircleFilled />}
-                    nextArrow={<RightCircleFilled />}
+                    prevArrow={<CaretLeftOutlined />}
+                    nextArrow={<RightOutlined />}
                     >
                         {images.map((slide, index) => (
                             <div key={index}>
