@@ -1,8 +1,10 @@
 import { Button, Form, message, Descriptions, Avatar, List  } from "antd";
+import { AntDesignOutlined } from '@ant-design/icons';
 import React from "react";
 import ItemUpload from "./ItemUpload";
 import { dataAll } from "../testData";
 import { getAllItems, getMyAcctInfo, getMyItems } from "../utils";
+import Misc from '../assets/images/genre_photos/Misc.png';
 
 // const testData = {
 //     username:'user123',
@@ -116,7 +118,7 @@ class AcctInfo extends React.Component {
                 }}>
                 
                     <Descriptions title="Products Posted" bordered style={{width: '90%',}}></Descriptions>
-                    <ItemUpload />
+                    <ItemUpload refresh={this.loadData}/>
 
                  </div>
 
@@ -130,7 +132,7 @@ class AcctInfo extends React.Component {
                     renderItem={item => (
                     <List.Item>
                         <List.Item.Meta
-                        avatar={<Avatar src={item.images} />}
+                        avatar={item.images.length !== 0 ? <Avatar size="large" src={item.images[0].image_url} /> : <Avatar  size="large" src={Misc} />}
                         title={`Item ${item.product_id} - ${item.product_name}`}
                         description={item.description}
                         />
