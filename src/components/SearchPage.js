@@ -58,8 +58,8 @@ function SearchPage ({list, onSuccess, itemSelected}) {
     }
 
     const renderCardImage = (item) => {
-      if (item.images != null) {
-        return <img alt="Product Picture" style={{ height: "100%" }} src={item.images[0]} />;
+      if (item.images.length !== 0) {
+        return <img alt="Product Picture" style={{ height: "100%" }} src={item.images[0].image_url} />;
       }
 
       if (item.genre_type.genreType === "Clothes") {
@@ -102,24 +102,12 @@ function SearchPage ({list, onSuccess, itemSelected}) {
               dataSource={list}
               renderItem={item => (
                   <List.Item style={{ marginRight: '20px' }}>
-                      {/* <Card
-                          title={renderCardTitle(item)}
-                      >
-                          <a href={item.url} target="_blank" rel="noopener noreferrer">
-                              <img
-                                  alt="Placeholder"
-                                  src={processUrl(item.thumbnail_url)}
-                              />
-                          </a>
-                      </Card> */}
-                      {/* <div  onClick={onItemSelect(item.itemId)}> */}
                       <div onClick={() => onItemSelect(item.product_id)}>
                         <Card
                             hoverable
                             style={{width: 300, padding: "10px"}}         
                             cover={
                               <div style={{overflow:"hidden", height: 360}}>
-                                  {/* <img alt="Product Picture" style={{ height: "100%" }} src={item.image} /> */}
                                   {renderCardImage(item)}
                               </div>
                             } 
@@ -136,7 +124,7 @@ function SearchPage ({list, onSuccess, itemSelected}) {
 
     return (
         <Layout>
-        <Sider width={300} className="site-layout-background">
+        <Sider width={"15%"} className="site-layout-background">
           
             <Content
               className="site-layout-background"

@@ -65,13 +65,14 @@ class ItemUpload extends React.Component {
                  () => {
                     // download url
                    
-                    const urlPromise = getDownloadURL(uploadTask.snapshot.ref).then((fburl) => {
-                        //console.log("completed uploading...")
-                        console.log(`url-${i}:`);
-                        console.log(fburl);                       
-                        const obj = {url: `${fburl}`};  
-                        return obj;
-                    });
+                    const urlPromise = getDownloadURL(uploadTask.snapshot.ref);
+                    // .then((fburl) => {
+                    //     //console.log("completed uploading...")
+                    //     console.log(`url-${i}:`);
+                    //     console.log(fburl);                       
+                    //     const obj = {url: `${fburl}`};  
+                    //     return obj;
+                    // });
                     urlPromises.push(urlPromise);                    
                 }
             );            
@@ -88,12 +89,14 @@ class ItemUpload extends React.Component {
             const urls = await Promise.all(urlPromises).then((urlResp) => {
                 console.log("urlPromises:");
                 console.log(urlPromises);
+                console.log("urlResp:");
+                console.log(urlResp);
                 console.log("urlPromises end");
-                return urlResp;
+                return urlResp.join(',');
             });
             console.log("urls:");
             console.log(urls);
-            formData.append("images", JSON.stringify(urls));           
+            formData.append("images", urls);           
             console.log("uploadPromises end");        
         })
 
@@ -110,9 +113,10 @@ class ItemUpload extends React.Component {
             console.log(formData.get('genre_type'));
             console.log(formData.get('description'));
             console.log(formData.get('images'));
+            message.info(formData.get('images'));
             
             try {
-              // await uploadItem(formData);
+              await uploadItem(formData);
               message.success("Successfully Submitted!");
             } catch (error) {
               message.error(error.message);

@@ -10,6 +10,7 @@ function App() {
 
   
   const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [acctInfo, setAcctInfo] = useState(false);
   const [itemInfo, setItemInfo] = useState(null);
 
@@ -42,18 +43,16 @@ function App() {
   // DidMount to getAllItems
   useEffect( () =>{
     async function fetchData(){
-   // setLoading(true);
+    setLoading(true);
 
     try {
       const resp = await getAllItems();
-      //const resp = getAllItems();
       searchOnSuccess(resp);
       
-
     } catch (error) {
       message.error(error.message);
     } finally {
-     // setLoading(false);
+      setLoading(false);
     }
   }
   fetchData();

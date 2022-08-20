@@ -76,7 +76,7 @@ function Header ({searchOnSuccess, acctInfoSelected}) {
                 enterButton
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                style={{width: 700, margin: 100}}
+                style={{width: "40%", margin: 100}}
             />
 
                 {

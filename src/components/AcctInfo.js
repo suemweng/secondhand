@@ -4,23 +4,23 @@ import ItemUpload from "./ItemUpload";
 import { dataAll } from "../testData";
 import { getAllItems, getMyAcctInfo, getMyItems } from "../utils";
 
-const testData = {
-    username:'user123',
-    firstName:'User',
-    lastName:'123',
-    email:'user123@gmail.com',
-    phone:'123-456-888',
-    review:[{
-        id: 11,
-        review_content: "review contents 2",
-        created_at: "2022-08-14T23:21:47"
-    },
-    {
-        id: 12,
-        review_content: "review contents 1",
-        created_at: "2022-08-14T23:21:57"
-    }]
-}
+// const testData = {
+//     username:'user123',
+//     firstName:'User',
+//     lastName:'123',
+//     email:'user123@gmail.com',
+//     phone:'123-456-888',
+//     review:[{
+//         id: 11,
+//         review_content: "review contents 2",
+//         created_at: "2022-08-14T23:21:47"
+//     },
+//     {
+//         id: 12,
+//         review_content: "review contents 1",
+//         created_at: "2022-08-14T23:21:57"
+//     }]
+// }
 
 
 
@@ -36,9 +36,9 @@ class AcctInfo extends React.Component {
         console.log("Completed!");
     };
 
-    onClick = () => {
-        return <ItemUpload />;
-    }
+    // onClick = () => {
+    //     return <ItemUpload />;
+    // }
 
     // DidMount to getAllItems
     componentDidMount() {

@@ -9,7 +9,12 @@ import { CarouselData } from "./CarouselData";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
 
-
+import Shoes from '../assets/images/genre_photos/Shoes.webp';
+import Bags from '../assets/images/genre_photos/Bags.jpeg';
+import Clothes from '../assets/images/genre_photos/Clothes.jpeg';
+import Furnitures from '../assets/images/genre_photos/Furnitures.webp';
+import Electronics from '../assets/images/genre_photos/Electronics.jpeg';
+import Misc from '../assets/images/genre_photos/Misc.png';
 
 class ItemPage extends React.Component{
 
@@ -20,102 +25,41 @@ class ItemPage extends React.Component{
             paused: false,
         };
     }
-
-    componentDidMount() {
-        setInterval(() => {
-          if (this.state.paused === false) {
-            let newSlide =
-              this.state.currentSlide === CarouselData.length - 1
-                ? 0
-                : this.state.currentSlide + 1;
-            this.setState({ currentSlide: newSlide });
-          }
-        }, 3000);
-    }
-
-    nextSlide = () => {
-        let newSlide =
-          this.state.currentSlide === CarouselData.length - 1
-            ? 0
-            : this.state.currentSlide + 1;
-        this.setState({ currentSlide: newSlide });
-    };
-
-    prevSlide = () => {
-        let newSlide =
-          this.state.currentSlide === 0
-            ? CarouselData.length - 1
-            : this.state.currentSlide - 1;
-        this.setState({ currentSlide: newSlide });
-    };
     
-    setCurrentSlide = (index) => {
-        this.setState({ currentSlide: index });
-    };
 
     render() {
-        const name = this.props.itemInfo.product_name;
-        const price = this.props.itemInfo.price;
-        const genre = this.props.itemInfo.genre_type.genreType;
-        const description = this.props.itemInfo.description;
+
+        const {product_name, price, genre_type, description, images} = this.props.itemInfo;
         const {email, phone, firstName, lastName, reviews} = this.props.itemInfo.user;
 
+        if (images.length === 0) {
+            if (genre_type.genreType == "Clothes") {
+                images.push({image_url:Clothes});
+            }
+
+            if (genre_type.genreType == "Shoes") {
+                images.push({image_url:Shoes});
+            }
+
+            if (genre_type.genreType == "Bags") {
+                images.push({image_url:Bags});
+            }
+
+            if (genre_type.genreType == "Furnitures") {
+                images.push({image_url:Furnitures});
+            }
+
+            if (genre_type.genreType == "Electronics") {
+                images.push({image_url:Electronics});
+            } 
+            
+            images.push({image_url:Misc});                     
+        }
 
         return ( 
             <>
             <div style={{width:'50%', display:'flex', justifyContent:'center'}}>
-                {/* <div className="max-w-lg h-72 flex overflow-hidden relative">
-                    <AiOutlineLeft
-                        onClick={this.prevSlide}
-                        className="absolute left-0 text-3xl inset-y-1/2 text-white cursor-pointer"
-                    />
 
-                    <Swipe onSwipeLeft={this.nextSlide} onSwipeRight={this.prevSlide}>
-                        {CarouselData.map((slide, index) => {
-                            return (
-                                <img
-                                    src={slide.image}
-                                    alt="This is a carousel slide"
-                                    key={index}
-                                    className={
-                                        index === this.state.currentSlide
-                                            ? "block w-full h-auto object-cover"
-                                            : "hidden"
-                                    }
-                                    onMouseEnter={() => {
-                                        this.setState({ paused: true });
-                                    }}
-                                    onMouseLeave={() => {
-                                        this.setState({ paused: false });
-                                    }}
-                                />
-                            );
-                        })}
-                    </Swipe>
-
-                    <div className="absolute w-full flex justify-center bottom-0">
-                        {CarouselData.map((element, index) => {
-                            return (
-                                <div
-                                    className={
-                                    index === this.state.currentSlide
-                                        ? "h-2 w-2 bg-blue-700 rounded-full mx-2 mb-2 cursor-pointer"
-                                        : "h-2 w-2 bg-white rounded-full mx-2 mb-2 cursor-pointer"
-                                    }
-                                    key={index}
-                                    onClick={() => {
-                                        this.setCurrentSlide(index);
-                                    }}
-                                ></div>
-                            );
-                        })}
-                    </div>
-
-                    <AiOutlineRight
-                        onClick={this.nextSlide}
-                        className="absolute right-0 text-3xl inset-y-1/2 text-white cursor-pointer"
-                    />
-                </div> */}
                 <Card
                     style={{width:'80%', justifyItems:'center'}}
                 >
@@ -127,12 +71,12 @@ class ItemPage extends React.Component{
                     prevArrow={<LeftCircleFilled />}
                     nextArrow={<RightCircleFilled />}
                     >
-                        {CarouselData.map((slide, index) => (
+                        {images.map((slide, index) => (
                             <div key={index}>
-                                <Image src={slide.url} width="100%" />
+                                <Image src={slide.image_url} width="100%" />
                             </div>
                         ))}
-                </Carousel>}
+                    </Carousel>}
                 </Card>
             </div>
             <div className="mt-8" style={{
@@ -143,9 +87,9 @@ class ItemPage extends React.Component{
                     padding:'0px 30px'
                 }}>
                 <Descriptions title="Product Information" bordered>
-                    <Descriptions.Item label="Title"> {`${name}`}</Descriptions.Item>
+                    <Descriptions.Item label="Title"> {product_name}</Descriptions.Item>
                     <Descriptions.Item label="Price">{`$ ${price}`}</Descriptions.Item>
-                    <Descriptions.Item label="Category">{genre}</Descriptions.Item>
+                    <Descriptions.Item label="Category">{genre_type.genreType}</Descriptions.Item>
                     <Descriptions.Item label="Description">{description}</Descriptions.Item>
                 </Descriptions>
 
