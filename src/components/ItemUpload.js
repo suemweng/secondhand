@@ -14,16 +14,23 @@ const genreTypes = [
     { label: 'Misc', value: 'Misc' } ];
 
 class ItemUpload extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false, 
+            displayModal: false,
+            //percent: 0,
+        };
+    }
   
     uploadRef = React.createRef();
     
 
-    state = { 
-        loading: false, 
-        displayModal: false,
-        //percent: 0,
-    };
+    // state = { 
+    //     loading: false, 
+    //     displayModal: false,
+    //     //percent: 0,
+    // };
 
 
     handleSubmit = async (values) => {
@@ -113,11 +120,12 @@ class ItemUpload extends React.Component {
             console.log(formData.get('genre_type'));
             console.log(formData.get('description'));
             console.log(formData.get('images'));
-            message.info(formData.get('images'));
+
             
             try {
               await uploadItem(formData);
               message.success("Successfully Submitted!");
+              this.props.refresh();
             } catch (error) {
               message.error(error.message);
             } finally {
